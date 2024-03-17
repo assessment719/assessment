@@ -146,8 +146,6 @@
         <div id="university7" class="university-box"></div>
         <div id="university8" class="university-box"></div>
         <div id="university9" class="university-box"></div>
-        <div id="university10" class="university-box"></div>
-        <div id="university11" class="university-box"></div>
     </div>
 
 <script>
@@ -343,25 +341,24 @@
             let universityName6 = '';
 
             if (educationLevel2.value === 'Undergraduate' && educationSystem2.value === 'Board of Intermediate Education, Andhra Pradesh') {
-                if (inputValue2 >= 80) {
-                    universityName4 = 'Abertay University';
-                    universityName5 = 'Anglia Ruskin University';
-                } else if (inputValue2 >= 70) {
-                    universityName4 = 'University of Bradford';
-                    universityName5 = 'Another University for CBSE with 0-69 range';
+                if (inputValue2 >= 60) {
+                    universityName4 = 'Anglia Ruskin University';
+                    universityName5 = 'Coventry University';
+                } else if (inputValue2 >= 50) {
+                    universityName4 = 'Anglia Ruskin University';
                 } else {
-                    universityName4 = 'Another University for CBSE with 0-59 range';
+                    universityName4 = 'Null';
                 }
             } else if (educationLevel2.value === 'Postgraduate' && educationSystem2.value === 'Government of Kerala Board of Higher Secondary Examinations') {
                 if (inputValue2 >= 60) {
-                    universityName4 = 'Aberystwyth University';
-                    universityName5 = 'London Metropolitan University';
+                    universityName4 = 'Anglia Ruskin University';
+                    universityName5 = 'Coventry University';
                     universityName6 = 'De Montford University';
                 } else if (inputValue2 >= 50) {
-                    universityName4 = 'University of Bradford';
-                    universityName5 = 'Another University for CISCE with 0-49 range';
+                    universityName4 = 'Anglia Ruskin University';
+                    universityName5 = 'De Montford University';
                 } else {
-                    universityName4 = 'Another University for CISCE with 0-49 range';
+                    universityName4 = 'Null';
                 }
             }
 
