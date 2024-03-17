@@ -47,11 +47,27 @@
             border: none;
             border-radius: 5px;
             font-size: 16px;
+        font-weight: bold;
         }
 
         .button.active {
             background-color: green;
+            animation: colors 10s infinite;
         }
+        @keyframes colors {
+             0%{
+                 background-color: green;
+             }
+             25%{
+                 background-color: blue;
+             }
+             50%{
+                 background-color: yellow;
+             }
+             75%{
+                 background-color: pink;
+             }
+         }
     </style>
 </head>
 <body>
