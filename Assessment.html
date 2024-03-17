@@ -231,7 +231,7 @@
             const selectedLevel = educationLevel2.value;
             educationSystem2.innerHTML = ''; // Clearing previous options
             if (selectedLevel === 'Undergraduate') {
-                const options = ['1. Board of Intermediate Education, Andhra Pradesh', '2. Government of Kerala Board of Higher Secondary Examinations'];
+                const options = ['Board of Intermediate Education, Andhra Pradesh', 'Government of Kerala Board of Higher Secondary Examinations'];
                 options.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.textContent = option;
@@ -239,7 +239,7 @@
                     educationSystem2.appendChild(optionElement);
                 });
             } else if (selectedLevel === 'Postgraduate') {
-                const options = ['A. Board of Intermediate Education, Andhra Pradesh', 'B. Government of Kerala Board of Higher Secondary Examinations'];
+                const options = ['Board of Intermediate Education, Andhra Pradesh', 'Government of Kerala Board of Higher Secondary Examinations'];
                 options.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.textContent = option;
@@ -270,7 +270,7 @@
             const selectedLevel = educationLevel3.value;
             educationSystem3.innerHTML = ''; // Clearing previous options
             if (selectedLevel === 'Undergraduate') {
-                const options = ['1. IELTS', '2. Pearson Test of English', '3. TOEFL'];
+                const options = ['IELTS', 'Pearson Test of English', 'TOEFL'];
                 options.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.textContent = option;
@@ -278,7 +278,7 @@
                     educationSystem3.appendChild(optionElement);
                 });
             } else if (selectedLevel === 'Postgraduate') {
-                const options = ['A. IELTS', 'B. Pearson Test of English', 'C. TOEFL'];
+                const options = ['IELTS', 'Pearson Test of English', 'TOEFL'];
                 options.forEach(option => {
                     const optionElement = document.createElement('option');
                     optionElement.textContent = option;
@@ -337,7 +337,7 @@
             let universityName5 = '';
             let universityName6 = '';
 
-            if (educationLevel2.value === 'Undergraduate' && educationSystem2.value === '1. Board of Intermediate Education, Andhra Pradesh') {
+            if (educationLevel2.value === 'Undergraduate' && educationSystem2.value === 'Board of Intermediate Education, Andhra Pradesh') {
                 if (inputValue2 >= 80) {
                     universityName4 = 'Abertay University';
                     universityName5 = 'Anglia Ruskin University';
@@ -347,7 +347,7 @@
                 } else {
                     universityName4 = 'Another University for CBSE with 0-59 range';
                 }
-            } else if (educationLevel2.value === 'Postgraduate' && educationSystem2.value === 'B. Government of Kerala Board of Higher Secondary Examinations') {
+            } else if (educationLevel2.value === 'Postgraduate' && educationSystem2.value === 'Government of Kerala Board of Higher Secondary Examinations') {
                 if (inputValue2 >= 60) {
                     universityName4 = 'Aberystwyth University';
                     universityName5 = 'London Metropolitan University';
@@ -378,7 +378,7 @@
             let universityName7 = '';
             let universityName8 = '';
 
-            if (educationLevel3.value === 'Undergraduate' && educationSystem3.value === '1. IELTS') {
+            if (educationLevel3.value === 'Undergraduate' && educationSystem3.value === 'IELTS') {
                 if (inputValue3 >= 90 && inputValue4 >= 80 && inputValue5 >= 70 && inputValue6 >= 60 && inputValue7 >= 50) {
                     universityName7 = 'University of Birmingham';
                     universityName8 = 'University of Westminster';
@@ -386,7 +386,7 @@
                     universityName7 = 'University of Lincoln';
                     universityName8 = 'University of Liverpool';
                 }
-            } else if (educationLevel3.value === 'Postgraduate' && educationSystem3.value === 'A. IELTS') {
+            } else if (educationLevel3.value === 'Postgraduate' && educationSystem3.value === 'IELTS') {
                 if (inputValue3 >= 90 && inputValue4 >= 80 && inputValue5 >= 70 && inputValue6 >= 60 && inputValue7 >= 50) {
                     universityName7 = 'University of Birmingham';
                     universityName8 = 'University of Westminster';
@@ -394,7 +394,7 @@
                     universityName7 = 'University of Lincoln';
                     universityName8 = 'University of Liverpool';
                 }
-            } else if (educationLevel3.value === 'Undergraduate' && educationSystem3.value === '2. Pearson Test of English') {
+            } else if (educationLevel3.value === 'Undergraduate' && educationSystem3.value === 'Pearson Test of English') {
                 if (inputValue3 >= 90 && inputValue4 >= 80 && inputValue5 >= 70 && inputValue6 >= 60 && inputValue7 >= 50) {
                     universityName7 = 'University of Birmingham';
                     universityName8 = 'University of Westminster';
@@ -402,7 +402,7 @@
                     universityName7 = 'University of Lincoln';
                     universityName8 = 'University of Liverpool';
                 }
-            } else if (educationLevel3.value === 'Postgraduate' && educationSystem3.value === 'C. TOEFL') {
+            } else if (educationLevel3.value === 'Postgraduate' && educationSystem3.value === 'TOEFL') {
                 if (inputValue3 >= 90 && inputValue4 >= 80 && inputValue5 >= 70 && inputValue6 >= 60 && inputValue7 >= 50) {
                     universityName7 = 'University of Birmingham';
                     universityName8 = 'University of Westminster';
@@ -418,7 +418,7 @@
                     universityName7 = 'University of Lincoln';
                     universityName8 = 'University of Liverpool';
                 }
-            } else if (educationLevel3.value === 'Postgraduate' && educationSystem3.value === 'TOEFL') {
+            } else if (educationLevel3.value === 'Postgraduate' && educationSystem3.value === 'Pearson Test of English') {
                 if (inputValue3 >= 95 && inputValue4 >= 85 && inputValue5 >= 75 && inputValue6 >= 65 && inputValue7 >= 55) {
                     universityName7 = 'University of Birmingham';
                     universityName8 = 'University of Westminster';
