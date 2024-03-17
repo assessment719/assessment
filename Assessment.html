@@ -263,8 +263,6 @@
         const universityDiv7 = document.getElementById('university7');
         const universityDiv8 = document.getElementById('university8');
         const universityDiv9 = document.getElementById('university9');
-        const universityDiv10 = document.getElementById('university10');
-        const universityDiv11 = document.getElementById('university11');
 
         const updateEducationSystemOptions3 = () => {
             const selectedLevel = educationLevel3.value;
@@ -384,22 +382,23 @@
             const inputValue7 = parseInt(slider7.value);
             let universityName7 = '';
             let universityName8 = '';
+            let universityName9 = '';
 
             if (educationLevel3.value === 'Undergraduate' && educationSystem3.value === 'IELTS') {
-                if (inputValue3 >= 90 && inputValue4 >= 80 && inputValue5 >= 70 && inputValue6 >= 60 && inputValue7 >= 50) {
-                    universityName7 = 'University of Birmingham';
-                    universityName8 = 'University of Westminster';
-                } else if (inputValue3 >= 80 && inputValue4 >= 70 && inputValue5 >= 60 && inputValue6 >= 50 && inputValue7 >= 40) {
-                    universityName7 = 'University of Lincoln';
-                    universityName8 = 'University of Liverpool';
+                if (inputValue3 >= 60 && inputValue4 >= 55 && inputValue5 >= 55 && inputValue6 >= 55 && inputValue7 >= 55) {
+                    universityName7 = 'Anglia Ruskin University';
+                    universityName8 = 'Coventry University';
+                    universityName9 = 'De Montford University';
+                } else {
+                    universityName7 = 'Null';
                 }
             } else if (educationLevel3.value === 'Postgraduate' && educationSystem3.value === 'IELTS') {
-                if (inputValue3 >= 90 && inputValue4 >= 80 && inputValue5 >= 70 && inputValue6 >= 60 && inputValue7 >= 50) {
-                    universityName7 = 'University of Birmingham';
-                    universityName8 = 'University of Westminster';
-                } else if (inputValue3 >= 80 && inputValue4 >= 70 && inputValue5 >= 60 && inputValue6 >= 50 && inputValue7 >= 40) {
-                    universityName7 = 'University of Lincoln';
-                    universityName8 = 'University of Liverpool';
+                if (inputValue3 >= 65 && inputValue4 >= 60 && inputValue5 >= 60 && inputValue6 >= 60 && inputValue7 >= 60) {
+                    universityName7 = 'Anglia Ruskin University';
+                    universityName8 = 'Coventry University';
+                    universityName9 = 'De Montford University';
+                } else {
+                    universityName7 = 'Null';
                 }
             } else if (educationLevel3.value === 'Undergraduate' && educationSystem3.value === 'Pearson Test of English') {
                 if (inputValue3 >= 90 && inputValue4 >= 80 && inputValue5 >= 70 && inputValue6 >= 60 && inputValue7 >= 50) {
