@@ -300,15 +300,15 @@
             let universityName3 = '';
 
             if (educationLevel1.value === 'Undergraduate' && educationSystem1.value === 'Board of Intermediate Education, Andhra Pradesh') {
-                if (inputValue1 >= 70) {
-                    universityName1 = 'Anglia Ruskin University';
-                } else if (inputValue1 >= 80) {
+                if (inputValue1 >= 80) {
                     universityName1 = 'Anglia Ruskin University';
                     universityName2 = 'Coventry University';
+                } else if (inputValue1 >= 70) {
+                    universityName1 = 'Anglia Ruskin University';
                 } else {
                     universityName1 = 'Null';
                 }
-            } else if (educationLevel1.value === 'Undergraduate' && educationSystem1.value === 'Government of Kerala Board of Higher Secondary Examinations') {
+                } else if (educationLevel1.value === 'Undergraduate' && educationSystem1.value === 'Government of Kerala Board of Higher Secondary Examinations') {
                 if (inputValue1 >= 90) {
                     universityName1 = 'Anglia Ruskin University';
                     universityName2 = 'Coventry University';
@@ -317,13 +317,13 @@
                     universityName1 = 'Null';
                 }
             } else if (educationLevel1.value === 'Postgraduate' && educationSystem1.value === 'University of Calcutta' || 'Jadavpur University') {
-                if (inputValue1 >= 50) {
-                    universityName1 = 'Anglia Ruskin University';
-                    universityName2 = 'Coventry University';
-                } else if (inputValue1 >= 60) {
+                if (inputValue1 >= 60) {
                     universityName1 = 'Anglia Ruskin University';
                     universityName2 = 'Coventry University';
                     universityName3 = 'De Montford University';
+                } else if (inputValue1 >= 50) {
+                    universityName1 = 'Anglia Ruskin University';
+                    universityName2 = 'Coventry University';
                 } else {
                     universityName1 = 'Null';
                 }
