@@ -300,25 +300,32 @@
             let universityName3 = '';
 
             if (educationLevel1.value === 'Undergraduate' && educationSystem1.value === 'Board of Intermediate Education, Andhra Pradesh') {
-                if (inputValue1 >= 80) {
-                    universityName1 = 'Abertay University';
-                    universityName2 = 'Anglia Ruskin University';
-                } else if (inputValue1 >= 70) {
-                    universityName1 = 'University of Bradford';
-                    universityName2 = 'Another University for CBSE with 0-69 range';
+                if (inputValue1 >= 70) {
+                    universityName1 = 'Anglia Ruskin University';
+                } else if (inputValue1 >= 80) {
+                    universityName1 = 'Anglia Ruskin University';
+                    universityName2 = 'Coventry University';
                 } else {
-                    universityName1 = 'Another University for CBSE with 0-59 range';
+                    universityName1 = 'Null';
                 }
-            } else if (educationLevel1.value === 'Postgraduate' && educationSystem1.value === 'Jadavpur University') {
-                if (inputValue1 >= 60) {
-                    universityName1 = 'Aberystwyth University';
-                    universityName2 = 'London Metropolitan University';
+            } else if (educationLevel1.value === 'Undergraduate' && educationSystem1.value === 'Government of Kerala Board of Higher Secondary Examinations') {
+                if (inputValue1 >= 90) {
+                    universityName1 = 'Anglia Ruskin University';
+                    universityName2 = 'Coventry University';
                     universityName3 = 'De Montford University';
-                } else if (inputValue1 >= 50) {
-                    universityName1 = 'University of Bradford';
-                    universityName2 = 'Another University for CISCE with 0-49 range';
                 } else {
-                    universityName1 = 'Another University for CISCE with 0-49 range';
+                    universityName1 = 'Null';
+                }
+            } else if (educationLevel1.value === 'Postgraduate' && educationSystem1.value === 'University of Calcutta' || 'Jadavpur University') {
+                if (inputValue1 >= 50) {
+                    universityName1 = 'Anglia Ruskin University';
+                    universityName2 = 'Coventry University';
+                } else if (inputValue1 >= 60) {
+                    universityName1 = 'Anglia Ruskin University';
+                    universityName2 = 'Coventry University';
+                    universityName3 = 'De Montford University';
+                } else {
+                    universityName1 = 'Null';
                 }
             }
 
