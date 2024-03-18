@@ -73,6 +73,7 @@
         <button class="button active" id="form1Button">1. Academic Requirement</button>
         <button class="button" id="form2Button">2. Standard 12 English Waiver</button>
         <button class="button" id="form3Button">3. English Language Test</button>
+        <button class="button" id="form4Button">4. Fees Range</button>
     </div>
 
     <!-- First University Form -->
@@ -164,40 +165,80 @@
         <div id="university9" class="university-box"></div>
     </div>
 
+    <!-- Fourth University Form -->
+    <div class="container form-container" id="form4" style="display: none;">
+        <h2>4. Fees Range</h2>
+        <form id="universityForm4">
+            <label for="educationLevel4">Select Level of Study:</label>
+            <select id="educationLevel4">
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Postgraduate">Postgraduate</option>
+            </select>
+
+            <label for="slider8">Enter Fees:</label>
+            <input type="number" id="slider8" min="0" max="10000000" value="0">
+
+            <button type="submit">Submit</button>
+        </form>
+        <h2 style="text-align:center;">-: Universities You Can Suggest :-</h2>
+        <div id="university10" class="university-box"></div>
+        <div id="university11" class="university-box"></div>
+        <div id="university12" class="university-box"></div>
+    </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form1Button = document.getElementById('form1Button');
         const form2Button = document.getElementById('form2Button');
         const form3Button = document.getElementById('form3Button');
+        const form4Button = document.getElementById('form4Button');
         const form1 = document.getElementById('form1');
         const form2 = document.getElementById('form2');
         const form3 = document.getElementById('form3');
+        const form4 = document.getElementById('form4');
 
         form1Button.addEventListener('click', function() {
             form1.style.display = 'block';
             form2.style.display = 'none';
             form3.style.display = 'none';
+            form4.style.display = 'none';
             form1Button.classList.add('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
+            form4Button.classList.remove('active');
         });
 
         form2Button.addEventListener('click', function() {
             form1.style.display = 'none';
             form2.style.display = 'block';
             form3.style.display = 'none';
+            form4.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.add('active');
             form3Button.classList.remove('active');
+            form4Button.classList.remove('active');
         });
 
         form3Button.addEventListener('click', function() {
             form1.style.display = 'none';
             form2.style.display = 'none';
             form3.style.display = 'block';
+            form4.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.add('active');
+            form4Button.classList.remove('active');
+        });
+
+        form4Button.addEventListener('click', function() {
+            form1.style.display = 'none';
+            form2.style.display = 'none';
+            form3.style.display = 'none';
+            form4.style.display = 'block';
+            form1Button.classList.remove('active');
+            form2Button.classList.remove('active');
+            form3Button.classList.remove('active');
+            form4Button.classList.add('active');
         });
 
         const universityForm1 = document.getElementById('universityForm1');
@@ -478,6 +519,36 @@
         };
 
         universityForm3.addEventListener('submit', handleFormSubmit3);
+        
+            const universityForm4 = document.getElementById('universityForm4');
+            const educationLevel4 = document.getElementById('educationLevel4');
+            const slider8 = document.getElementById('slider8');
+            const universityDiv10 = document.getElementById('university10');
+            const universityDiv11 = document.getElementById('university11');
+            const universityDiv12 = document.getElementById('university12');
+
+            const handleFormSubmit4 = function(event) {
+                event.preventDefault(); // Prevent the form from submitting normally
+
+                const inputValue8 = parseInt(slider8.value);
+                let universityName10 = '';
+                let universityName11 = '';
+                let universityName12 = '';
+
+                if (inputValue8 >= 10000 && inputValue8 <= 15000) {
+                    universityName10 = 'Coventry University';
+                } else if (inputValue8 > 15000 && inputValue8 <= 20000) {
+                    universityName10 = 'Anglia Ruskin University';
+                    universityName11 = 'Coventry University';
+                }
+
+                universityDiv10.textContent = universityName10;
+                universityDiv11.textContent = universityName11;
+                universityDiv12.textContent = universityName12;
+            };
+
+            universityForm4.addEventListener('submit', handleFormSubmit4);
+        
     });
 </script>
 </body>
