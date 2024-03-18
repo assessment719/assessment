@@ -535,11 +535,24 @@
                 let universityName11 = '';
                 let universityName12 = '';
 
-                if (inputValue8 >= 10000 && inputValue8 <= 15000) {
-                    universityName10 = 'Coventry University';
-                } else if (inputValue8 > 15000 && inputValue8 <= 20000) {
-                    universityName10 = 'Anglia Ruskin University';
-                    universityName11 = 'Coventry University';
+                if (educationLevel4.value === 'Undergraduate') {
+                    if (inputValue8 >= 10000 && inputValue8 <= 15000) {
+                        universityName10 = 'Coventry University';
+                    } else if (inputValue8 > 15000 && inputValue8 <= 20000) {
+                        universityName10 = 'Anglia Ruskin University';
+                        universityName11 = 'Coventry University';
+                    } else {
+                        universityName10 = 'Null';
+                    }
+                } else if (educationLevel4.value === 'Postgraduate') {
+                    if (inputValue8 >= 25000 && inputValue8 <= 30000) {
+                        universityName10 = 'Coventry University';
+                    } else if (inputValue8 > 35000 && inputValue8 <= 40000) {
+                        universityName10 = 'Anglia Ruskin University';
+                        universityName11 = 'Coventry University';
+                    } else {
+                        universityName10 = 'Null';
+                    }                    
                 }
 
                 universityDiv10.textContent = universityName10;
