@@ -588,22 +588,17 @@
 
             if (educationLevel4.value === 'Undergraduate') {
                 if (inputValue8 >= 10000 && inputValue8 <= 15000) {
-                    universityName10 = 'Coventry University';
-                } else if (inputValue8 > 15000 && inputValue8 <= 20000) {
-                     universityName10 = 'Anglia Ruskin University';
-                     universityName11 = 'Coventry University';
-                } else {
-                        universityName10 = 'Null';
-                }
-             } else if (educationLevel4.value === 'Postgraduate') {
-                if (inputValue8 >= 25000 && inputValue8 <= 30000) {
-                    universityName10 = 'Coventry University';
-                } else if (inputValue8 > 35000 && inputValue8 <= 40000) {
                     universityName10 = 'Anglia Ruskin University';
+                } 
+                if (inputValue8 >= 12000 && inputValue8 <= 17000) {
                     universityName11 = 'Coventry University';
-                } else {
+                } 
+                if (inputValue8 >= 13000 && inputValue8 <= 18000) {
+                    universityName12 = 'De Montfort University';
+                } 
+                if (universityName10 === '' && universityName11 === '' && universityName12 === '') {
                     universityName10 = 'Null';
-                }                    
+                }
              }
 
              universityDiv10.textContent = universityName10;
