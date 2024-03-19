@@ -74,6 +74,7 @@
         <button class="button" id="form2Button">2. Standard 12 English Waiver</button>
         <button class="button" id="form3Button">3. English Language Test</button>
         <button class="button" id="form4Button">4. Fees Range</button>
+        <button class="button" id="form5Button">5. Scholarship</button>
     </div>
 
     <!-- First University Form -->
@@ -185,6 +186,28 @@
         <div id="university11" class="university-box"></div>
         <div id="university12" class="university-box"></div>
     </div>
+    
+    <!-- Fifth University Form -->
+    <div class="container form-container" id="form5">
+        <h2>5. Scholarship</h2>
+        <form id="universityForm5">
+            <label for="educationLevel5">Select Level of Study:</label>
+            <select id="educationLevel5">
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Postgraduate">Postgraduate</option>
+            </select>
+            <label for="educationSystem4">Select University:</label>
+            <select id="educationSystem4">
+                <option value="Anglia Ruskin University">Anglia Ruskin University</option>
+                <option value="Coventry University">Coventry University</option>
+                <option value="De Monteord University">De Monteord University</option>
+            </select>
+
+            <button type="submit">Submit</button>
+        </form>
+        <h2 style="text-align:center;">-: Scholarship Amount :-</h2>
+        <div id="university13" class="university-box"></div>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -192,20 +215,24 @@
         const form2Button = document.getElementById('form2Button');
         const form3Button = document.getElementById('form3Button');
         const form4Button = document.getElementById('form4Button');
+        const form5Button = document.getElementById('form5Button');
         const form1 = document.getElementById('form1');
         const form2 = document.getElementById('form2');
         const form3 = document.getElementById('form3');
         const form4 = document.getElementById('form4');
+        const form5 = document.getElementById('form5');
 
         form1Button.addEventListener('click', function() {
             form1.style.display = 'block';
             form2.style.display = 'none';
             form3.style.display = 'none';
             form4.style.display = 'none';
+            form5.style.display = 'none';
             form1Button.classList.add('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
             form4Button.classList.remove('active');
+            form5Button.classList.remove('active');
         });
 
         form2Button.addEventListener('click', function() {
@@ -213,10 +240,12 @@
             form2.style.display = 'block';
             form3.style.display = 'none';
             form4.style.display = 'none';
+            form5.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.add('active');
             form3Button.classList.remove('active');
             form4Button.classList.remove('active');
+            form5Button.classList.remove('active');
         });
 
         form3Button.addEventListener('click', function() {
@@ -224,10 +253,12 @@
             form2.style.display = 'none';
             form3.style.display = 'block';
             form4.style.display = 'none';
+            form5.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.add('active');
             form4Button.classList.remove('active');
+            form5Button.classList.remove('active');
         });
 
         form4Button.addEventListener('click', function() {
@@ -235,10 +266,25 @@
             form2.style.display = 'none';
             form3.style.display = 'none';
             form4.style.display = 'block';
+            form5.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
             form4Button.classList.add('active');
+            form5Button.classList.remove('active');
+        });
+        
+        form5Button.addEventListener('click', function() {
+            form1.style.display = 'none';
+            form2.style.display = 'none';
+            form3.style.display = 'none';
+            form4.style.display = 'none';
+            form5.style.display = 'block';
+            form1Button.classList.remove('active');
+            form2Button.classList.remove('active');
+            form3Button.classList.remove('active');
+            form4Button.classList.remove('active');
+            form5Button.classList.add('active');
         });
 
         const universityForm1 = document.getElementById('universityForm1');
@@ -343,6 +389,18 @@
 
         educationLevel3.addEventListener('change', updateEducationSystemOptions3);
         updateEducationSystemOptions3(); // Initial population of options
+        
+        const universityForm4 = document.getElementById('universityForm4');
+        const educationLevel4 = document.getElementById('educationLevel4');
+        const slider8 = document.getElementById('slider8');
+        const universityDiv10 = document.getElementById('university10');
+        const universityDiv11 = document.getElementById('university11');
+        const universityDiv12 = document.getElementById('university12');
+        
+        const universityForm5 = document.getElementById('universityForm5');
+        const educationLevel5 = document.getElementById('educationLevel5');
+        const educationSystem4 = document.getElementById('educationSystem4');
+        const universityDiv13 = document.getElementById('university13');
 
         const handleFormSubmit1 = function(event) {
             event.preventDefault(); // Prevent the form from submitting normally
@@ -519,49 +577,60 @@
         };
 
         universityForm3.addEventListener('submit', handleFormSubmit3);
-        
-            const universityForm4 = document.getElementById('universityForm4');
-            const educationLevel4 = document.getElementById('educationLevel4');
-            const slider8 = document.getElementById('slider8');
-            const universityDiv10 = document.getElementById('university10');
-            const universityDiv11 = document.getElementById('university11');
-            const universityDiv12 = document.getElementById('university12');
 
-            const handleFormSubmit4 = function(event) {
-                event.preventDefault(); // Prevent the form from submitting normally
+        const handleFormSubmit4 = function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
 
-                const inputValue8 = parseInt(slider8.value);
-                let universityName10 = '';
-                let universityName11 = '';
-                let universityName12 = '';
+            const inputValue8 = parseInt(slider8.value);
+            let universityName10 = '';
+            let universityName11 = '';
+            let universityName12 = '';
 
-                if (educationLevel4.value === 'Undergraduate') {
-                    if (inputValue8 >= 10000 && inputValue8 <= 15000) {
-                        universityName10 = 'Coventry University';
-                    } else if (inputValue8 > 15000 && inputValue8 <= 20000) {
-                        universityName10 = 'Anglia Ruskin University';
-                        universityName11 = 'Coventry University';
-                    } else {
+            if (educationLevel4.value === 'Undergraduate') {
+                if (inputValue8 >= 10000 && inputValue8 <= 15000) {
+                    universityName10 = 'Coventry University';
+                } else if (inputValue8 > 15000 && inputValue8 <= 20000) {
+                     universityName10 = 'Anglia Ruskin University';
+                     universityName11 = 'Coventry University';
+                } else {
                         universityName10 = 'Null';
-                    }
-                } else if (educationLevel4.value === 'Postgraduate') {
-                    if (inputValue8 >= 25000 && inputValue8 <= 30000) {
-                        universityName10 = 'Coventry University';
-                    } else if (inputValue8 > 35000 && inputValue8 <= 40000) {
-                        universityName10 = 'Anglia Ruskin University';
-                        universityName11 = 'Coventry University';
-                    } else {
-                        universityName10 = 'Null';
-                    }                    
                 }
+             } else if (educationLevel4.value === 'Postgraduate') {
+                if (inputValue8 >= 25000 && inputValue8 <= 30000) {
+                    universityName10 = 'Coventry University';
+                } else if (inputValue8 > 35000 && inputValue8 <= 40000) {
+                    universityName10 = 'Anglia Ruskin University';
+                    universityName11 = 'Coventry University';
+                } else {
+                    universityName10 = 'Null';
+                }                    
+             }
 
-                universityDiv10.textContent = universityName10;
-                universityDiv11.textContent = universityName11;
-                universityDiv12.textContent = universityName12;
-            };
-
-            universityForm4.addEventListener('submit', handleFormSubmit4);
+             universityDiv10.textContent = universityName10;
+             universityDiv11.textContent = universityName11;
+             universityDiv12.textContent = universityName12;
+        };
+            
+        universityForm4.addEventListener('submit', handleFormSubmit4);
         
+        const handleFormSubmit5 = function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            let universityName13 = '';
+
+            if (educationLevel5.value === 'Undergraduate' && educationSystem4.value === 'Anglia Ruskin University') {
+                universityName13 = '5000 GBP';
+             } else if (educationLevel5.value === 'Undergraduate' && educationSystem4.value === 'Coventry University'){
+                    universityName13 = '8000 GBP';  
+             } else {
+                    universityName13 = 'Null';
+             }
+
+             universityDiv13.textContent = universityName13;
+        };
+            
+        universityForm5.addEventListener('submit', handleFormSubmit5);
+
     });
 </script>
 </body>
