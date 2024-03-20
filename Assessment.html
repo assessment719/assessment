@@ -51,19 +51,24 @@
         }
 
         .button.active {
-            background-color: green;
-            animation: colors 10s infinite;
+        background-color: green;
+        animation: combinedAnimation 7s infinite;
         }
-        @keyframes colors {
-             0%{
-                 background-color: green;
+
+        @keyframes combinedAnimation {
+             0%, 100% {
+                      background-color: green;
+                      transform: scale(1);
              }
-             35%{
+             35% {
                  background-color: plum;
              }
-             75%{
+             75% {
                  background-color: coral;
              }
+             50% {
+                 transform: scale(1.1);
+             } 
          }
     </style>
 </head>
