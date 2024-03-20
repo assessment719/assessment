@@ -81,6 +81,7 @@
         <button class="button" id="form3Button">3. English Language Test</button>
         <button class="button" id="form4Button">4. Fees Range</button>
         <button class="button" id="form5Button">5. Scholarship</button>
+        <button class="button" id="form6Button">6. Important Documents and Factors</button>
     </div>
 
     <!-- First University Form -->
@@ -214,6 +215,32 @@
         <h2 style="text-align:center;">-: Scholarship Amount :-</h2>
         <div id="university13" class="university-box"></div>
     </div>
+    
+    <!-- Sixth University Form -->
+    <div class="container form-container" id="form6" style="display: none;">
+        <h2>6. Important Documents and Factors</h2>
+        <form id="universityForm6">
+            <label for="educationLevel6">Select Your Field of Query:</label>
+            <select id="educationLevel6">
+                <option value="Letter of Refferance">Letter of Refferance</option>
+                <option value="Statement of Purpose">Statement of Purpose</option>
+                <option value="Consolidated Marksheet">Consolidated Marksheet</option>
+            </select>
+            <label for="educationSystem5">Select University:</label>
+            <select id="educationSystem5">
+                <option value="Anglia Ruskin University">Anglia Ruskin University</option>
+                <option value="Coventry University">Coventry University</option>
+                <option value="De Monteord University">De Monteord University</option>
+                <option value="University of Bedfordshire">University of Bedfordshire</option>
+            </select>
+
+            <button type="submit">Submit</button>
+        </form>
+        <h2 style="text-align:center;">-: Importancy :-</h2>
+        <div id="university14" class="university-box"></div>
+        <h2 style="text-align:center;">-: Extra Points To Remember :-</h2>
+        <div id="university15" class="university-box"></div>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -222,11 +249,13 @@
         const form3Button = document.getElementById('form3Button');
         const form4Button = document.getElementById('form4Button');
         const form5Button = document.getElementById('form5Button');
+        const form6Button = document.getElementById('form6Button');
         const form1 = document.getElementById('form1');
         const form2 = document.getElementById('form2');
         const form3 = document.getElementById('form3');
         const form4 = document.getElementById('form4');
         const form5 = document.getElementById('form5');
+        const form6 = document.getElementById('form6');
 
         form1Button.addEventListener('click', function() {
             form1.style.display = 'block';
@@ -234,11 +263,13 @@
             form3.style.display = 'none';
             form4.style.display = 'none';
             form5.style.display = 'none';
+            form6.style.display = 'none';
             form1Button.classList.add('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
             form4Button.classList.remove('active');
             form5Button.classList.remove('active');
+            form6Button.classList.remove('active');
         });
 
         form2Button.addEventListener('click', function() {
@@ -247,11 +278,13 @@
             form3.style.display = 'none';
             form4.style.display = 'none';
             form5.style.display = 'none';
+            form6.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.add('active');
             form3Button.classList.remove('active');
             form4Button.classList.remove('active');
             form5Button.classList.remove('active');
+            form6Button.classList.remove('active');
         });
 
         form3Button.addEventListener('click', function() {
@@ -260,11 +293,13 @@
             form3.style.display = 'block';
             form4.style.display = 'none';
             form5.style.display = 'none';
+            form6.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.add('active');
             form4Button.classList.remove('active');
             form5Button.classList.remove('active');
+            form6Button.classList.remove('active');
         });
 
         form4Button.addEventListener('click', function() {
@@ -273,11 +308,13 @@
             form3.style.display = 'none';
             form4.style.display = 'block';
             form5.style.display = 'none';
+            form6.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
             form4Button.classList.add('active');
             form5Button.classList.remove('active');
+            form6Button.classList.remove('active');
         });
         
         form5Button.addEventListener('click', function() {
@@ -286,11 +323,28 @@
             form3.style.display = 'none';
             form4.style.display = 'none';
             form5.style.display = 'block';
+            form6.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
             form4Button.classList.remove('active');
             form5Button.classList.add('active');
+            form6Button.classList.remove('active');
+        });
+        
+        form6Button.addEventListener('click', function() {
+            form1.style.display = 'none';
+            form2.style.display = 'none';
+            form3.style.display = 'none';
+            form4.style.display = 'none';
+            form5.style.display = 'none';
+            form6.style.display = 'block';
+            form1Button.classList.remove('active');
+            form2Button.classList.remove('active');
+            form3Button.classList.remove('active');
+            form4Button.classList.remove('active');
+            form5Button.classList.remove('active');
+            form6Button.classList.add('active');
         });
 
         const universityForm1 = document.getElementById('universityForm1');
@@ -407,6 +461,12 @@
         const educationLevel5 = document.getElementById('educationLevel5');
         const educationSystem4 = document.getElementById('educationSystem4');
         const universityDiv13 = document.getElementById('university13');
+        
+        const universityForm6 = document.getElementById('universityForm6');
+        const educationLevel6 = document.getElementById('educationLevel6');
+        const educationSystem5 = document.getElementById('educationSystem5');
+        const universityDiv14 = document.getElementById('university14');
+        const universityDiv15 = document.getElementById('university15');
 
         const handleFormSubmit1 = function(event) {
             event.preventDefault(); // Prevent the form from submitting normally
@@ -644,6 +704,32 @@
         };
             
         universityForm5.addEventListener('submit', handleFormSubmit5);
+        
+        const handleFormSubmit6 = function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            let universityName14 = '';
+            let universityName15 = '';
+
+            if (educationLevel6.value === 'Statement of Purpose' && educationSystem5.value === 'Anglia Ruskin University') {
+                universityName14 = 'Important';
+                universityName15 = '100% Non Plagarised';
+             } else if (educationLevel6.value === 'Letter of Refferance' && educationSystem5.value === 'University of Bedfordshire'){
+                    universityName14 = 'Important';
+                    universityName15 = '2 Letter of Refferance with 1 Referee Email and Phone Number';
+             } else if (educationLevel6.value === 'Consolidated Marksheet' && educationSystem5.value === 'Coventry University'){
+                    universityName14 = 'Important';
+                    universityName15 = 'Null';       
+             } else {
+                    universityName14 = 'Null';
+                    universityName15 = 'Null'; 
+             }
+
+             universityDiv14.textContent = universityName14;
+             universityDiv15.textContent = universityName15;
+        };
+            
+        universityForm6.addEventListener('submit', handleFormSubmit6);
 
     });
 </script>
