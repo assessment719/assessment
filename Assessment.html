@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProfileMatch</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -94,7 +97,7 @@
                 <option value="Postgraduate">Postgraduate</option>
             </select>
             <label for="educationSystem1">Select Educational Institutions:</label>
-            <select id="educationSystem1">
+            <select id="educationSystem1" class="js-example-basic-single" style="width: 100%;">
                 <!-- Options will be dynamically populated based on the selected educationLevel1 -->
             </select>
 
@@ -119,7 +122,7 @@
                 <option value="Postgraduate">Postgraduate</option>
             </select>
             <label for="educationSystem2">Select Educational Institutions:</label>
-            <select id="educationSystem2">
+            <select id="educationSystem2" class="js-example-basic-single" style="width: 100%;">
                 <!-- Options will be dynamically populated based on the selected educationLevel2 -->
             </select>
 
@@ -144,7 +147,7 @@
                 <option value="Postgraduate">Postgraduate</option>
             </select>
             <label for="educationSystem3">Select English Language Test:</label>
-            <select id="educationSystem3">
+            <select id="educationSystem3" class="js-example-basic-single" style="width: 100%;">
                 <option value="IELTS">IELTS</option>
                 <option value="Pearson Test of English">Pearson Test of English</option>
                 <option value="TOEFL">TOEFL</option>
@@ -204,7 +207,7 @@
                 <option value="Postgraduate">Postgraduate</option>
             </select>
             <label for="educationSystem4">Select University:</label>
-            <select id="educationSystem4">
+            <select id="educationSystem4" class="js-example-basic-single" style="width: 100%;">
                 <option value="Anglia Ruskin University">Anglia Ruskin University</option>
                 <option value="Coventry University">Coventry University</option>
                 <option value="De Monteord University">De Monteord University</option>
@@ -221,13 +224,13 @@
         <h2>6. Important Documents and Factors</h2>
         <form id="universityForm6">
             <label for="educationLevel6">Select Your Field of Query:</label>
-            <select id="educationLevel6">
+            <select id="educationLevel6" class="js-example-basic-single" style="width: 100%;">
                 <option value="Letter of Refferance">Letter of Refferance</option>
                 <option value="Statement of Purpose">Statement of Purpose</option>
                 <option value="Consolidated Marksheet">Consolidated Marksheet</option>
             </select>
             <label for="educationSystem5">Select University:</label>
-            <select id="educationSystem5">
+            <select id="educationSystem5" class="js-example-basic-single" style="width: 100%;">
                 <option value="Anglia Ruskin University">Anglia Ruskin University</option>
                 <option value="Coventry University">Coventry University</option>
                 <option value="De Monteord University">De Monteord University</option>
@@ -242,8 +245,12 @@
         <div id="university15" class="university-box"></div>
     </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+        
         const form1Button = document.getElementById('form1Button');
         const form2Button = document.getElementById('form2Button');
         const form3Button = document.getElementById('form3Button');
