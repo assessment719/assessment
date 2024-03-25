@@ -695,10 +695,20 @@
                     universityName10 = 'Anglia Ruskin University';
                 } 
                 if (inputValue8 >= 12000 && inputValue8 <= 17000) {
-                    universityName11 = 'Coventry University';
+                    if (universityName10 === '') {
+                        universityName10 = 'Coventry University';
+                    } else {
+                        universityName11 = 'Coventry University';
+                    }
                 } 
                 if (inputValue8 >= 13000 && inputValue8 <= 18000) {
-                    universityName12 = 'De Montfort University';
+                    if (universityName10 === '') {
+                        universityName10 = 'De Montfort University';
+                    } else if (universityName11 === '') {
+                        universityName11 = 'De Montfort University';
+                    } else {
+                        universityName12 = 'De Montfort University';
+                    }
                 } 
                 if (universityName10 === '' && universityName11 === '' && universityName12 === '') {
                     universityName10 = 'Null';
@@ -708,10 +718,20 @@
                     universityName10 = 'Anglia Ruskin University';
                 } 
                 if (inputValue8 >= 15000 && inputValue8 <= 20000) {
-                    universityName11 = 'Coventry University';
+                    if (universityName10 === '') {
+                        universityName10 = 'Coventry University';
+                    } else {
+                        universityName11 = 'Coventry University';
+                    }
                 } 
                 if (inputValue8 >= 16000 && inputValue8 <= 21000) {
-                    universityName12 = 'De Montfort University';
+                    if (universityName10 === '') {
+                        universityName10 = 'De Montfort University';
+                    } else if (universityName11 === '') {
+                        universityName11 = 'De Montfort University';
+                    } else {
+                        universityName12 = 'De Montfort University';
+                    }
                 } 
                 if (universityName10 === '' && universityName11 === '' && universityName12 === '') {
                     universityName10 = 'Null';
