@@ -13,6 +13,10 @@
         .container {
             margin: 20px;
         }
+        
+        .welcomecontainer {
+            text-align: center;
+        }
 
         label {
             display: block;
@@ -71,6 +75,25 @@
                  transform: scale(1.1);
              } 
          }
+  
+         .welcometext {
+           font-size: 24px;
+           font-weight: bold;
+           color: #333;
+           opacity: 0;
+           animation: fadeIn 2s forwards;
+          }
+  
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(-20px);
+            }
+            to {
+               opacity: 1;
+               transform: translateY(0);
+            }
+          }
     </style>
 </head>
 <body>
@@ -85,8 +108,8 @@
         <button class="button" id="form6Button">6. Important Documents and Factors</button>
     </div>
     
-    <div id="text">
-    <h1 style="justify-content:center; text-align:center;">Welcome to The World of Accurate Profile Assessment!</h1>
+    <div class="welcomecontainer">
+      <h1 class="welcometext" id="text">Welcome to The World of Accurate Profile Assessment!</h1>
     </div>
 
     <!-- First University Form -->
