@@ -236,12 +236,15 @@
                 <option value="Anglia Ruskin University">Anglia Ruskin University</option>
                 <option value="Coventry University">Coventry University</option>
                 <option value="De Montfort University">De Montfort University</option>
+                <option value="Buckinghamshire New University">Buckinghamshire New University</option>
             </select>
 
             <button type="submit">Submit</button>
         </form>
         <h2 style="text-align:center;">-: Scholarship Amount :-</h2>
         <div id="university13" class="university-box"></div>
+        <h2 style="text-align:center;">-: Extra Points To Remember :-</h2>
+        <div id="university14" class="university-box"></div>
     </div>
     
     <!-- Sixth University Form -->
@@ -265,9 +268,9 @@
             <button type="submit">Submit</button>
         </form>
         <h2 style="text-align:center;">-: Comment :-</h2>
-        <div id="university14" class="university-box"></div>
-        <h2 style="text-align:center;">-: Extra Points To Remember :-</h2>
         <div id="university15" class="university-box"></div>
+        <h2 style="text-align:center;">-: Extra Points To Remember :-</h2>
+        <div id="university16" class="university-box"></div>
     </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -499,12 +502,13 @@
         const educationLevel5 = document.getElementById('educationLevel5');
         const educationSystem4 = document.getElementById('educationSystem4');
         const universityDiv13 = document.getElementById('university13');
+        const universityDiv14 = document.getElementById('university14');
         
         const universityForm6 = document.getElementById('universityForm6');
         const educationLevel6 = document.getElementById('educationLevel6');
         const educationSystem5 = document.getElementById('educationSystem5');
-        const universityDiv14 = document.getElementById('university14');
         const universityDiv15 = document.getElementById('university15');
+        const universityDiv16 = document.getElementById('university16');
 
         const handleFormSubmit1 = function(event) {
             event.preventDefault(); // Prevent the form from submitting normally
@@ -749,16 +753,38 @@
             event.preventDefault(); // Prevent the form from submitting normally
 
             let universityName13 = '';
+            let universityName14 = '';
 
             if (educationLevel5.value === 'Undergraduate' && educationSystem4.value === 'Anglia Ruskin University') {
                 universityName13 = '5000 GBP';
+                universityName14 = 'Null';
              } else if (educationLevel5.value === 'Undergraduate' && educationSystem4.value === 'Coventry University'){
-                    universityName13 = '8000 GBP';  
+                    universityName13 = '8000 GBP';
+                    universityName14 = 'Null';
+             } else if (educationLevel5.value === 'Undergraduate' && educationSystem4.value === 'Buckinghamshire New University'){
+                    universityName13 = '1500 GBP';
+                    universityName14 = 'Null';
              } else {
                     universityName13 = 'Null';
+                    universityName14 = 'Null';
              }
+          } else if (educationLevel5.value === 'Postgraduate' && educationSystem4.value === 'Anglia Ruskin University') {
+                universityName13 = '6000 GBP';
+                universityName14 = 'Null';
+             } else if (educationLevel5.value === 'Postgraduate' && educationSystem4.value === 'Coventry University'){
+                    universityName13 = '9000 GBP';
+                    universityName14 = 'Null';
+             } else if (educationLevel5.value === 'Postgraduate' && educationSystem4.value === 'Buckinghamshire New University'){
+                    universityName13 = '3000 GBP';
+                    universityName14 = 'For LLM and MBA Course it is 5000 GBP';
+             } else {
+                    universityName13 = 'Null';
+                    universityName14 = 'Null';
+             }
+          }
 
              universityDiv13.textContent = universityName13;
+             universityDiv14.textContent = universityName14;
         };
             
         universityForm5.addEventListener('submit', handleFormSubmit5);
@@ -766,25 +792,25 @@
         const handleFormSubmit6 = function(event) {
             event.preventDefault(); // Prevent the form from submitting normally
 
-            let universityName14 = '';
             let universityName15 = '';
+            let universityName16 = '';
 
             if (educationLevel6.value === 'Statement of Purpose' && educationSystem5.value === 'Anglia Ruskin University') {
-                universityName14 = 'Mandatory';
-                universityName15 = '100% Non Plagarised';
+                universityName15 = 'Mandatory';
+                universityName16 = '100% Non Plagarised';
              } else if (educationLevel6.value === 'Letter of Reference' && educationSystem5.value === 'University of Bedfordshire'){
-                    universityName14 = 'Mandatory';
-                    universityName15 = '2 Letter of Reference with 1 Referee Email and Phone Number';
+                    universityName15 = 'Mandatory';
+                    universityName16 = '2 Letter of Reference with 1 Referee Email and Phone Number';
              } else if (educationLevel6.value === 'Consolidated Marksheet' && educationSystem5.value === 'Coventry University'){
-                    universityName14 = 'Mandatory';
-                    universityName15 = 'Null';       
+                    universityName15 = 'Mandatory';
+                    universityName16 = 'Null';       
              } else {
-                    universityName14 = 'Null';
-                    universityName15 = 'Null'; 
+                    universityName15 = 'Null';
+                    universityName16 = 'Null'; 
              }
 
-             universityDiv14.textContent = universityName14;
              universityDiv15.textContent = universityName15;
+             universityDiv16.textContent = universityName16;
         };
             
         universityForm6.addEventListener('submit', handleFormSubmit6);
