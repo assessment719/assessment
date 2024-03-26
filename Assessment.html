@@ -30,11 +30,28 @@
         }
 
         .university-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-top: 20px;
             font-weight: bold;
             text-align: center;
             border: 2px solid green;
             padding: 0px;
+            position: relative;
+        }
+
+        .info-button {
+            display: none;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-weight: bold;
+            background-color: tomato;
+            color: white;
+            border-radius: 10px;
         }
 
         .button-container {
@@ -132,9 +149,18 @@
             <button type="submit">Submit</button>
         </form>
         <h2 style="text-align:center;">-: Universities You Can Suggest :-</h2>
-        <div id="university1" class="university-box"></div>
-        <div id="university2" class="university-box"></div>
-        <div id="university3" class="university-box"></div>
+        <div id="university1" class="university-box">
+            <span id="universityName1"></span>
+            <button class="info-button" id="infoButton1">Info</button>
+        </div>
+        <div id="university2" class="university-box">
+            <span id="universityName2"></span>
+            <button class="info-button" id="infoButton2">Info</button>
+        </div>
+        <div id="university3" class="university-box">
+            <span id="universityName3"></span>
+            <button class="info-button" id="infoButton3">Info</button>
+        </div>
     </div>
 
     <!-- Second University Form -->
@@ -157,9 +183,18 @@
             <button type="submit">Submit</button>
         </form>
         <h2 style="text-align:center;">-: Universities You Can Suggest :-</h2>
-        <div id="university4" class="university-box"></div>
-        <div id="university5" class="university-box"></div>
-        <div id="university6" class="university-box"></div>
+        <div id="university4" class="university-box">
+            <span id="universityName4"></span>
+            <button class="info-button" id="infoButton1">Info</button>
+        </div>
+        <div id="university5" class="university-box">
+            <span id="universityName5"></span>
+            <button class="info-button" id="infoButton2">Info</button>
+        </div>
+        <div id="university6" class="university-box">
+            <span id="universityName6"></span>
+            <button class="info-button" id="infoButton3">Info</button>
+        </div>
     </div>
 
     <!-- Third University Form -->
@@ -196,9 +231,18 @@
             <button type="submit">Submit</button>
         </form>
         <h2 style="text-align:center;">-: Universities You Can Suggest :-</h2>
-        <div id="university7" class="university-box"></div>
-        <div id="university8" class="university-box"></div>
-        <div id="university9" class="university-box"></div>
+        <div id="university7" class="university-box">
+            <span id="universityName7"></span>
+            <button class="info-button" id="infoButton1">Info</button>
+        </div>
+        <div id="university8" class="university-box">
+            <span id="universityName8"></span>
+            <button class="info-button" id="infoButton2">Info</button>
+        </div>
+        <div id="university9" class="university-box">
+            <span id="universityName9"></span>
+            <button class="info-button" id="infoButton3">Info</button>
+        </div>
     </div>
 
     <!-- Fourth University Form -->
@@ -392,9 +436,9 @@
         const educationLevel1 = document.getElementById('educationLevel1');
         const educationSystem1 = document.getElementById('educationSystem1');
         const slider1 = document.getElementById('slider1');
-        const universityDiv1 = document.getElementById('university1');
-        const universityDiv2 = document.getElementById('university2');
-        const universityDiv3 = document.getElementById('university3');
+        const universityDiv1 = document.getElementById('universityName1');
+        const universityDiv2 = document.getElementById('universityName2');
+        const universityDiv3 = document.getElementById('universityName3');
 
         const updateEducationSystemOptions1 = () => {
             const selectedLevel = educationLevel1.value;
@@ -425,9 +469,9 @@
         const educationLevel2 = document.getElementById('educationLevel2');
         const educationSystem2 = document.getElementById('educationSystem2');
         const slider2 = document.getElementById('slider2');
-        const universityDiv4 = document.getElementById('university4');
-        const universityDiv5 = document.getElementById('university5');
-        const universityDiv6 = document.getElementById('university6');
+        const universityDiv4 = document.getElementById('universityName4');
+        const universityDiv5 = document.getElementById('universityName5');
+        const universityDiv6 = document.getElementById('universityName6');
 
         const updateEducationSystemOptions2 = () => {
             const selectedLevel = educationLevel2.value;
@@ -462,9 +506,9 @@
         const slider5 = document.getElementById('slider5');
         const slider6 = document.getElementById('slider6');
         const slider7 = document.getElementById('slider7');
-        const universityDiv7 = document.getElementById('university7');
-        const universityDiv8 = document.getElementById('university8');
-        const universityDiv9 = document.getElementById('university9');
+        const universityDiv7 = document.getElementById('universityName7');
+        const universityDiv8 = document.getElementById('universityName8');
+        const universityDiv9 = document.getElementById('universityName9');
 
         const updateEducationSystemOptions3 = () => {
             const selectedLevel = educationLevel3.value;
@@ -556,7 +600,55 @@
             universityDiv1.textContent = universityName1;
             universityDiv2.textContent = universityName2;
             universityDiv3.textContent = universityName3;
+
+            showInfoButtonsForm1();
         };
+
+        const showInfoButtonsForm1 = function() {
+            const infoButtons = document.querySelectorAll('#form1 .info-button');
+            infoButtons.forEach((button, index) => {
+                const universityDiv = document.getElementById('universityName' + (index + 1));
+                if (universityDiv.textContent.trim() !== '') {
+                    const universityName = universityDiv.textContent.trim();
+                    const educationLevel = educationLevel1.value;
+                    if ((educationLevel === 'Undergraduate' && ['Anglia Ruskin University', 'Coventry University'].includes(universityName)) ||
+                        (educationLevel === 'Postgraduate' && ['Anglia Ruskin University', 'Coventry University', 'De Montfort University'].includes(universityName))) {
+                        button.style.display = 'inline-block'; // Show the info button only if the university box is not empty and the suggested university is valid
+                    } else {
+                        button.style.display = 'none';
+                    }
+                } else {
+                    button.style.display = 'none'; // Hide the info button if the university box is blank
+                }
+            });
+        };
+
+        const handleInfoButtonClickForm1 = function(event) {
+            const universityDiv = event.target.previousElementSibling;
+            let message = '';
+            const universityName = universityDiv.textContent.trim();
+            const educationLevel = document.getElementById('educationLevel1').value;
+
+            if (universityName.includes('Anglia Ruskin University')) {
+                if (educationLevel === 'Undergraduate') {
+                    message = 'UCOL'; // University College of London
+                } else if (educationLevel === 'Postgraduate') {
+                    message = 'GASPL'; // Graduate School of Politics and Law
+                }
+            } else if (universityName.includes('Coventry University')) {
+                message = 'It’s Successful for Coventry University';
+            } else if (universityName.includes('De Montfort University')) {
+                message = 'It’s Successful for De Montfort University';
+            } else {
+                message = 'No university suggested';
+            }
+            alert(message); // Display the message
+        };
+
+        // Add event listeners to the info buttons for university form 1
+        document.querySelectorAll('#form1 .info-button').forEach(button => {
+            button.addEventListener('click', handleInfoButtonClickForm1);
+        });
 
         universityForm1.addEventListener('submit', handleFormSubmit1);
 
@@ -613,7 +705,55 @@
             universityDiv4.textContent = universityName4;
             universityDiv5.textContent = universityName5;
             universityDiv6.textContent = universityName6;
+
+            showInfoButtonsForm2();
         };
+
+        const showInfoButtonsForm2 = function() {
+            const infoButtons = document.querySelectorAll('#form2 .info-button');
+            infoButtons.forEach((button, index) => {
+                const universityDiv = document.getElementById('universityName' + (index + 4));
+                if (universityDiv.textContent.trim() !== '') {
+                    const universityName = universityDiv.textContent.trim();
+                    const educationLevel = educationLevel2.value;
+                    if ((educationLevel === 'Undergraduate' && ['Anglia Ruskin University', 'Coventry University'].includes(universityName)) ||
+                        (educationLevel === 'Postgraduate' && ['Anglia Ruskin University', 'Coventry University', 'De Montfort University'].includes(universityName))) {
+                        button.style.display = 'inline-block'; // Show the info button only if the university box is not empty and the suggested university is valid
+                    } else {
+                        button.style.display = 'none';
+                    }
+                } else {
+                    button.style.display = 'none'; // Hide the info button if the university box is blank
+                }
+            });
+        };
+
+        const handleInfoButtonClickForm2 = function(event) {
+            const universityDiv = event.target.previousElementSibling;
+            let message = '';
+            const universityName = universityDiv.textContent.trim();
+            const educationLevel = document.getElementById('educationLevel2').value;
+
+            if (universityName.includes('Anglia Ruskin University')) {
+                if (educationLevel === 'Undergraduate') {
+                    message = 'UCOL\nUniversity College of London'; // University College of London
+                } else if (educationLevel === 'Postgraduate') {
+                    message = 'GASPL\nGraduate School of Politics and Law'; // Graduate School of Politics and Law
+                }
+            } else if (universityName.includes('Coventry University')) {
+                message = 'It’s Successful for Coventry University';
+            } else if (universityName.includes('De Montfort University')) {
+                message = 'It’s Successful for De Montfort University';
+            } else {
+                message = 'No university suggested';
+            }
+            alert(message); // Display the message
+        };
+
+        // Add event listeners to the info buttons for university form 2
+        document.querySelectorAll('#form2 .info-button').forEach(button => {
+            button.addEventListener('click', handleInfoButtonClickForm2);
+        });
 
         universityForm2.addEventListener('submit', handleFormSubmit2);
 
@@ -682,7 +822,55 @@
             universityDiv7.textContent = universityName7;
             universityDiv8.textContent = universityName8;
             universityDiv9.textContent = universityName9;
+
+            showInfoButtonsForm3();
         };
+
+        const showInfoButtonsForm3 = function() {
+            const infoButtons = document.querySelectorAll('#form3 .info-button');
+            infoButtons.forEach((button, index) => {
+                const universityDiv = document.getElementById('universityName' + (index + 7));
+                if (universityDiv.textContent.trim() !== '') {
+                    const universityName = universityDiv.textContent.trim();
+                    const educationLevel = educationLevel3.value;
+                    if ((educationLevel === 'Undergraduate' && ['Anglia Ruskin University', 'Coventry University'].includes(universityName)) ||
+                        (educationLevel === 'Postgraduate' && ['Anglia Ruskin University', 'Coventry University', 'De Montfort University'].includes(universityName))) {
+                        button.style.display = 'inline-block'; // Show the info button only if the university box is not empty and the suggested university is valid
+                    } else {
+                        button.style.display = 'none';
+                    }
+                } else {
+                    button.style.display = 'none'; // Hide the info button if the university box is blank
+                }
+            });
+        };
+
+        const handleInfoButtonClickForm3 = function(event) {
+            const universityDiv = event.target.previousElementSibling;
+            let message = '';
+            const universityName = universityDiv.textContent.trim();
+            const educationLevel = document.getElementById('educationLevel3').value;
+
+            if (universityName.includes('Anglia Ruskin University')) {
+                if (educationLevel === 'Undergraduate') {
+                    message = 'UCOL'; // University College of London
+                } else if (educationLevel === 'Postgraduate') {
+                    message = 'GASPL'; // Graduate School of Politics and Law
+                }
+            } else if (universityName.includes('Coventry University')) {
+                message = 'It’s Successful for Coventry University';
+            } else if (universityName.includes('De Montfort University')) {
+                message = 'It’s Successful for De Montfort University';
+            } else {
+                message = 'No university suggested';
+            }
+            alert(message); // Display the message
+        };
+
+        // Add event listeners to the info buttons for university form 3
+        document.querySelectorAll('#form3 .info-button').forEach(button => {
+            button.addEventListener('click', handleInfoButtonClickForm3);
+        });
 
         universityForm3.addEventListener('submit', handleFormSubmit3);
 
