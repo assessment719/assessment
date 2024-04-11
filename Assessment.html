@@ -123,6 +123,18 @@
                transform: translateY(0);
             }
           }
+          
+          .redirectbutton {
+            margin: 0 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #58D68D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -135,6 +147,7 @@
         <button class="button" id="form4Button">4. Fees Range</button>
         <button class="button" id="form5Button">5. Scholarship</button>
         <button class="button" id="form6Button">6. Important Documents and Factors</button>
+        <button class="button" id="form7Button">7. Course Search</button>
     </div>
     
     <div class="welcomecontainer">
@@ -328,6 +341,14 @@
         <h2 style="text-align:center;">-: Extra Points To Remember :-</h2>
         <div id="university16" class="university-box"></div>
     </div>
+    
+    <!-- Seventh University Form -->
+    <div class="container form-container" id="form7" style="display: none;">
+        <h2 style="text-align:center;">7. Course Search</h2>
+        <form id="universityForm7">
+        <div class="button-container">
+            <button class="redirectbutton" id="bachelorButton">Go to Undergraduate Courses</button>
+            <button class="redirectbutton" id="masterButton">Go to Postgraduate Courses</button>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -341,12 +362,14 @@
         const form4Button = document.getElementById('form4Button');
         const form5Button = document.getElementById('form5Button');
         const form6Button = document.getElementById('form6Button');
+        const form7Button = document.getElementById('form7Button');
         const form1 = document.getElementById('form1');
         const form2 = document.getElementById('form2');
         const form3 = document.getElementById('form3');
         const form4 = document.getElementById('form4');
         const form5 = document.getElementById('form5');
         const form6 = document.getElementById('form6');
+        const form7 = document.getElementById('form7');
 
         form1Button.addEventListener('click', function() {
             text.style.display = "none";
@@ -356,12 +379,14 @@
             form4.style.display = 'none';
             form5.style.display = 'none';
             form6.style.display = 'none';
+            form7.style.display = 'none';
             form1Button.classList.add('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
             form4Button.classList.remove('active');
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
+            form7Button.classList.remove('active');
         });
 
         form2Button.addEventListener('click', function() {
@@ -372,12 +397,14 @@
             form4.style.display = 'none';
             form5.style.display = 'none';
             form6.style.display = 'none';
+            form7.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.add('active');
             form3Button.classList.remove('active');
             form4Button.classList.remove('active');
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
+            form7Button.classList.remove('active');
         });
 
         form3Button.addEventListener('click', function() {
@@ -388,12 +415,14 @@
             form4.style.display = 'none';
             form5.style.display = 'none';
             form6.style.display = 'none';
+            form7.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.add('active');
             form4Button.classList.remove('active');
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
+            form7Button.classList.remove('active');
         });
 
         form4Button.addEventListener('click', function() {
@@ -404,12 +433,14 @@
             form4.style.display = 'block';
             form5.style.display = 'none';
             form6.style.display = 'none';
+            form7.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
             form4Button.classList.add('active');
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
+            form7Button.classList.remove('active');
         });
         
         form5Button.addEventListener('click', function() {
@@ -426,6 +457,7 @@
             form4Button.classList.remove('active');
             form5Button.classList.add('active');
             form6Button.classList.remove('active');
+            form7Button.classList.remove('active');
         });
         
         form6Button.addEventListener('click', function() {
@@ -436,12 +468,32 @@
             form4.style.display = 'none';
             form5.style.display = 'none';
             form6.style.display = 'block';
+            form7.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
             form4Button.classList.remove('active');
             form5Button.classList.remove('active');
             form6Button.classList.add('active');
+            form7Button.classList.remove('active');
+        });
+        
+        form7Button.addEventListener('click', function() {
+            text.style.display = "none";
+            form1.style.display = 'none';
+            form2.style.display = 'none';
+            form3.style.display = 'none';
+            form4.style.display = 'none';
+            form5.style.display = 'none';
+            form6.style.display = 'none';
+            form7.style.display = 'block';
+            form1Button.classList.remove('active');
+            form2Button.classList.remove('active');
+            form3Button.classList.remove('active');
+            form4Button.classList.remove('active');
+            form5Button.classList.remove('active');
+            form6Button.classList.remove('active');
+            form7Button.classList.add('active');
         });
 
         const universityForm1 = document.getElementById('universityForm1');
@@ -1006,7 +1058,17 @@
         };
             
         universityForm6.addEventListener('submit', handleFormSubmit6);
+        
+        // Function to open the Bachelor Studies link in a new tab
+        document.getElementById("bachelorButton").addEventListener("click", function() {
+          window.open("https://www.bachelorstudies.com/", "_blank");
+        });
 
+        // Function to open the Master Studies link in a new tab
+        document.getElementById("masterButton").addEventListener("click", function() {
+          window.open("https://www.masterstudies.com/", "_blank");
+        });
+  
     });
 </script>
 </body>
