@@ -349,6 +349,11 @@
         <div class="button-container">
             <button class="redirectbutton" id="bachelorButton">Undergraduate Courses</button>
             <button class="redirectbutton" id="masterButton">Postgraduate Courses</button>
+            <button class="redirectbutton" id="LawButton">Law Courses</button>
+            <button class="redirectbutton" id="MBAButton">MBA Courses</button>
+            <button class="redirectbutton" id="HealthcareButton">Healthcare Courses</button>
+        </div>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -1067,6 +1072,21 @@
         // Function to open the Master Studies link in a new tab
         document.getElementById("masterButton").addEventListener("click", function() {
           window.open("https://www.masterstudies.com/", "_blank");
+        });
+        
+        // Function to open the Law Studies link in a new tab
+        document.getElementById("LawButton").addEventListener("click", function() {
+          window.open("https://www.lawstudies.com/", "_blank");
+        });
+        
+        // Function to open the MBA Studies link in a new tab
+        document.getElementById("MBAButton").addEventListener("click", function() {
+          window.open("https://www.mbastudies.com/", "_blank");
+        });
+        
+        // Function to open the Healthcare Studies link in a new tab
+        document.getElementById("HealthcareButton").addEventListener("click", function() {
+          window.open("https://www.healthcarestudies.com/", "_blank");
         });
   
     });
