@@ -149,6 +149,7 @@
         <button class="button" id="form5Button">5. Scholarship</button>
         <button class="button" id="form6Button">6. Important Documents and Factors</button>
         <button class="button" id="form7Button">7. Relevent Course</button>
+        <button class="button" id="form8Button">8. University Course Page</button>
     </div>
     
     <div class="welcomecontainer">
@@ -354,6 +355,23 @@
             <button class="redirectbutton" id="MBAButton">MBA Courses</button>
             <button class="redirectbutton" id="HealthcareButton">Healthcare Courses</button>
         </div>
+        </form>
+    </div>
+    
+    <!-- Eighth University Form -->
+    <div class="container form-container" id="form8" style="display: none;">
+        <h2>8. University Course Search</h2>
+        <form id="universityForm7">
+            <label for="educationLevel7">Select Univrsity:</label>
+            <select id="educationLevel7" class="js-example-basic-single" style="width: 100%;">
+                <option value="Anglia Ruskin University">Anglia Ruskin University</option>
+                <option value="Coventry University">Coventry University</option>
+                <option value="University of Bedfordshire">University of Bedfordshire</option>
+            </select>
+            <div class="button-container">
+                <button class="redirectbutton" id="courseButton">Go To Course Page</button>
+            </div>
+        </form>
     </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -369,6 +387,7 @@
         const form5Button = document.getElementById('form5Button');
         const form6Button = document.getElementById('form6Button');
         const form7Button = document.getElementById('form7Button');
+        const form8Button = document.getElementById('form8Button');
         const form1 = document.getElementById('form1');
         const form2 = document.getElementById('form2');
         const form3 = document.getElementById('form3');
@@ -376,6 +395,7 @@
         const form5 = document.getElementById('form5');
         const form6 = document.getElementById('form6');
         const form7 = document.getElementById('form7');
+        const form8 = document.getElementById('form8');
 
         form1Button.addEventListener('click', function() {
             text.style.display = "none";
@@ -386,6 +406,7 @@
             form5.style.display = 'none';
             form6.style.display = 'none';
             form7.style.display = 'none';
+            form8.style.display = 'none';
             form1Button.classList.add('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
@@ -393,6 +414,7 @@
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
             form7Button.classList.remove('active');
+            form8Button.classList.remove('active');
         });
 
         form2Button.addEventListener('click', function() {
@@ -404,6 +426,7 @@
             form5.style.display = 'none';
             form6.style.display = 'none';
             form7.style.display = 'none';
+            form8.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.add('active');
             form3Button.classList.remove('active');
@@ -411,6 +434,7 @@
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
             form7Button.classList.remove('active');
+            form8Button.classList.remove('active');
         });
 
         form3Button.addEventListener('click', function() {
@@ -422,6 +446,7 @@
             form5.style.display = 'none';
             form6.style.display = 'none';
             form7.style.display = 'none';
+            form8.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.add('active');
@@ -429,6 +454,7 @@
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
             form7Button.classList.remove('active');
+            form8Button.classList.remove('active');
         });
 
         form4Button.addEventListener('click', function() {
@@ -440,6 +466,7 @@
             form5.style.display = 'none';
             form6.style.display = 'none';
             form7.style.display = 'none';
+            form8.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
@@ -447,6 +474,7 @@
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
             form7Button.classList.remove('active');
+            form8Button.classList.remove('active');
         });
         
         form5Button.addEventListener('click', function() {
@@ -457,6 +485,8 @@
             form4.style.display = 'none';
             form5.style.display = 'block';
             form6.style.display = 'none';
+            form7.style.display = 'none';
+            form8.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
@@ -464,6 +494,7 @@
             form5Button.classList.add('active');
             form6Button.classList.remove('active');
             form7Button.classList.remove('active');
+            form8Button.classList.remove('active');
         });
         
         form6Button.addEventListener('click', function() {
@@ -475,6 +506,7 @@
             form5.style.display = 'none';
             form6.style.display = 'block';
             form7.style.display = 'none';
+            form8.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
@@ -482,6 +514,7 @@
             form5Button.classList.remove('active');
             form6Button.classList.add('active');
             form7Button.classList.remove('active');
+            form8Button.classList.remove('active');
         });
         
         form7Button.addEventListener('click', function() {
@@ -493,6 +526,7 @@
             form5.style.display = 'none';
             form6.style.display = 'none';
             form7.style.display = 'block';
+            form8.style.display = 'none';
             form1Button.classList.remove('active');
             form2Button.classList.remove('active');
             form3Button.classList.remove('active');
@@ -500,6 +534,27 @@
             form5Button.classList.remove('active');
             form6Button.classList.remove('active');
             form7Button.classList.add('active');
+            form8Button.classList.remove('active');
+        });
+        
+        form8Button.addEventListener('click', function() {
+            text.style.display = "none";
+            form1.style.display = 'none';
+            form2.style.display = 'none';
+            form3.style.display = 'none';
+            form4.style.display = 'none';
+            form5.style.display = 'none';
+            form6.style.display = 'none';
+            form7.style.display = 'none';
+            form8.style.display = 'block';
+            form1Button.classList.remove('active');
+            form2Button.classList.remove('active');
+            form3Button.classList.remove('active');
+            form4Button.classList.remove('active');
+            form5Button.classList.remove('active');
+            form6Button.classList.remove('active');
+            form7Button.classList.remove('active');
+            form8Button.classList.add('active');
         });
 
         const universityForm1 = document.getElementById('universityForm1');
@@ -1089,6 +1144,28 @@
         document.getElementById("HealthcareButton").addEventListener("click", function() {
           window.open("https://www.healthcarestudies.com/", "_blank");
         });
+        
+        // Assuming educationLevel7 is an input field
+        var educationLevel7 = document.getElementById("educationLevel7");
+
+        // Assuming courseButton is a button
+        var courseButton = document.getElementById("courseButton");
+
+        // Adding event listener to the button
+        courseButton.addEventListener("click", function() {
+            // Checking if the value of educationLevel7 is 'Anglia Ruskin University'
+            if (educationLevel7.value === 'Anglia Ruskin University') {
+                // If true, open the YouTube link in a new tab
+                window.open("https://www.aru.ac.uk/international/courses", "_blank");
+             } else if (educationLevel7.value === 'Coventry University') {
+                // If true, open the YouTube link in a new tab
+                window.open("https://www.coventry.ac.uk/search/?search=&contentType=newcoursepage", "_blank");
+             } else if (educationLevel7.value === 'University of Bedfordshire') {
+                // If true, open the YouTube link in a new tab
+                window.open("https://www.beds.ac.uk/howtoapply/courses/", "_blank");
+             }
+        });
+
   
     });
 </script>
