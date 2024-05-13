@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+            border: solid;
+            border-color: black;
+            border-radius: 5px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .search-box {
+            width: 400px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .filters {
+            width: 3000px;
+            background-color: #fff;
+            padding: 20px;
+            border: solid;
+            border-color: black;
+            border-radius: 5px;
+        }
+        .filter-heading {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .filter-options {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .result-section {
+            flex-grow: 1;
+            margin-bottom: 10px;
+        }
+        .result-heading {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .result-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            border: solid;
+            border-color: black;
+            border-radius: 5px;
+        }
+        .result-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-box">
+            <label for="courseName">Search Courses:</label>
+            <input type="text" id="courseName" placeholder="Enter Course Name...." style="width: 100%;">
+        </div>
+        <div class="filters">
+            <div class="filter-heading">University Name:</div>
+            <select id="universityFilter" class="filter-options" style="width: 100%;">
+                <option value="">All Universities</option>
+                <!-- Add options dynamically using JavaScript -->
+            </select>
+
+            <div class="filter-heading">Course Type:</div>
+            <select id="courseTypeFilter" class="filter-options">
+                <option value="">All Types</option>
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Postgraduate">Postgraduate</option>
+            </select>
+
+            <div class="filter-heading">Intake:</div>
+            <select id="intakeFilter" class="filter-options">
+                <option value="">All Intakes</option>
+                <option value="September/October 2024">September/October 2024</option>
+                <option value="July/August 2024">July/August 2024</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="result-section">
+            <div class="result-heading" style="text-align:center;">Course Name</div>
+            <ul class="result-list" id="courseNameList">
+                <!-- Course Name results will be dynamically added here -->
+            </ul>
+        </div>
+        <div class="result-section">
+            <div class="result-heading" style="text-align:center;">University Name</div>
+            <ul class="result-list" id="universityNameList" style="text-align:center;">
+                <!-- University Name results will be dynamically added here -->
+            </ul>
+        </div>
+        <div class="result-section">
+            <div class="result-heading" style="text-align:center;">Course Type</div>
+            <ul class="result-list" id="courseTypeList" style="text-align:center;">
+                <!-- Course Type results will be dynamically added here -->
+            </ul>
+        </div>
+        <div class="result-section">
+            <div class="result-heading" style="text-align:center;">Intake</div>
+            <ul class="result-list" id="intakeList" style="text-align:center;">
+                <!-- Intake results will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        // Sample courses data (replace with actual data)
+        const courses = [
+            { university: "Example University", courseName: "Business Administration", courseType: "Undergraduate", intake: "September/October 2024" },
+            { university: "Example University", courseName: "International Business", courseType: "Undergraduate", intake: "July/August 2024" },
+            { university: "Example University", courseName: "Business Analytics", courseType: "Postgraduate", intake: "September/October 2024" },
+            { university: "Example University", courseName: "Business Ethics", courseType: "Postgraduate", intake: "July/August 2024" },
+            { university: "Example University", courseName: "Marketing Management", courseType: "Postgraduate", intake: "September/October 2024" },
+            { university: "Example University", courseName: "Finance for Business", courseType: "Undergraduate", intake: "July/August 2024" },
+            { university: "Anglia Ruskin University", courseName: "Finance for Marketing", courseType: "Postgraduate", intake: "September/October 2024" },
+        ];
+
+        // Function to populate the University Name filter options
+        function populateUniversityFilter() {
+            const universityFilter = $('#universityFilter');
+            const universities = [...new Set(courses.map(course => course.university))];
+            universities.forEach(university => {
+                const option = new Option(university, university, true, true);
+                universityFilter.append(option).trigger('change');
+            });
+        }
+
+        // Function to filter courses based on user input
+        function filterCourses() {
+            const searchTerm = $('#courseName').val().toLowerCase();
+            const universityFilter = $('#universityFilter').val();
+            const courseTypeFilter = $('#courseTypeFilter').val();
+            const intakeFilter = $('#intakeFilter').val();
+
+            const filteredCourses = courses.filter(course => {
+                const matchSearchTerm = course.courseName.toLowerCase().includes(searchTerm);
+                const matchUniversity = universityFilter === '' || course.university === universityFilter;
+                const matchCourseType = courseTypeFilter === '' || course.courseType === courseTypeFilter;
+                const matchIntake = intakeFilter === '' || course.intake === intakeFilter;
+                return matchSearchTerm && matchUniversity && matchCourseType && matchIntake;
+            });
+
+            displayResults(filteredCourses);
+        }
+
+        // Function to display filtered courses in separate sections
+        function displayResults(courses) {
+            const courseNameList = $('#courseNameList');
+            const universityNameList = $('#universityNameList');
+            const courseTypeList = $('#courseTypeList');
+            const intakeList = $('#intakeList');
+
+            courseNameList.empty();
+            universityNameList.empty();
+            courseTypeList.empty();
+            intakeList.empty();
+
+            courses.forEach(course => {
+                const courseNameItem = $('<li class="result-item"></li>').text(course.courseName);
+                const universityNameItem = $('<li class="result-item"></li>').text(course.university);
+                const courseTypeItem = $('<li class="result-item"></li>').text(course.courseType);
+                const intakeItem = $('<li class="result-item"></li>').text(course.intake);
+
+                courseNameList.append(courseNameItem);
+                universityNameList.append(universityNameItem);
+                courseTypeList.append(courseTypeItem);
+                intakeList.append(intakeItem);
+            });
+        }
+
+        // Populate University Name filter options
+        populateUniversityFilter();
+
+        // Initial display of all courses
+        displayResults(courses);
+
+        // Initialize Select2 for University Name filter
+        $('#universityFilter').select2();
+
+        // Event listener for filter change
+        $('#universityFilter').on('change', filterCourses);
+        $('#courseTypeFilter').on('change', filterCourses);
+        $('#intakeFilter').on('change', filterCourses);
+        // Event listener for input change
+        $('#courseName').on('input', filterCourses);
+
+        // Display all courses when "All Universities" is selected
+        $('#universityFilter').on('select2:select', function (e) {
+            if (e.params.data.id === '') {
+                displayResults(courses);
+            }
+        });
+
+        // Set default selection to "All Universities"
+        $(document).ready(function() {
+            $('#universityFilter').val('').trigger('change');
+        });
+    </script>
+</body>
+</html>
