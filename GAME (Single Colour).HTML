@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        body {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        canvas {
+            border: 10px solid #000;
+            border-color: purple;
+        }
+    </style>
+</head>
+<body>
+    <h2>Score: <span id="score">0</span></h2>
+    <canvas id="gameCanvas" width="650" height="650"></canvas>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const gridSize = 20;
+        let snake = [{ x: 10, y: 10 }];
+        let apple = { x: 15, y: 15 };
+        let direction = "right";
+        let score = 0;
+        let interval = 200; // Increased initial interval for a slower snake
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Snake
+            ctx.fillStyle = "#00F";
+            snake.forEach(segment => {
+                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
+            });
+
+            // Draw Apple
+            ctx.fillStyle = "#F00";
+            ctx.fillRect(apple.x * gridSize, apple.y * gridSize, gridSize, gridSize);
+        }
+
+        function update() {
+            const head = { ...snake[0] };
+
+            // Update snake position based on the direction
+            switch (direction) {
+                case "up":
+                    head.y--;
+                    break;
+                case "down":
+                    head.y++;
+                    break;
+                case "left":
+                    head.x--;
+                    break;
+                case "right":
+                    head.x++;
+                    break;
+            }
+
+            // Check if the snake eats the apple
+            if (head.x === apple.x && head.y === apple.y) {
+                snake.unshift({ ...head });
+                generateApple();
+                updateScore();
+                increaseSpeed();
+            } else {
+                // Move the snake
+                snake.pop();
+                snake.unshift({ ...head });
+            }
+
+            // Check for collisions
+            checkCollisions();
+        }
+
+        function generateApple() {
+            apple = {
+                x: Math.floor(Math.random() * (canvas.width / gridSize)),
+                y: Math.floor(Math.random() * (canvas.height / gridSize)),
+            };
+        }
+
+        function checkCollisions() {
+            const head = snake[0];
+
+            // Check if snake collides with walls
+            if (head.x < 0 || head.x >= canvas.width / gridSize || head.y < 0 || head.y >= canvas.height / gridSize) {
+                resetGame();
+            }
+
+            // Check if snake collides with itself
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    resetGame();
+                }
+            }
+        }
+
+        function resetGame() {
+            snake = [{ x: 10, y: 10 }];
+            direction = "right";
+            score = -1;
+            updateScore();
+            interval = 200; // Reset interval for a slower snake
+            generateApple();
+        }
+
+        function updateScore() {
+            score++;
+            document.getElementById("score").innerText = score;
+        }
+
+        function increaseSpeed() {
+            interval -= 10;
+        }
+
+        function gameLoop() {
+            draw();
+            update();
+        }
+
+        // Handle arrow key presses
+        document.addEventListener("keydown", (event) => {
+            switch (event.key) {
+                case "ArrowUp":
+                    if (direction !== "down") {
+                        direction = "up";
+                    }
+                    break;
+                case "ArrowDown":
+                    if (direction !== "up") {
+                        direction = "down";
+                    }
+                    break;
+                case "ArrowLeft":
+                    if (direction !== "right") {
+                        direction = "left";
+                    }
+                    break;
+                case "ArrowRight":
+                    if (direction !== "left") {
+                        direction = "right";
+                    }
+                    break;
+            }
+        });
+
+        // Set up the game loop with dynamic interval
+        setInterval(gameLoop, interval);
+    </script>
+</body>
+</html>
