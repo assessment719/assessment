@@ -29,6 +29,7 @@
             width: 400px;
             font-weight: bold;
             margin-bottom: 20px;
+            text-align:center;
         }
 
         .filters {
@@ -93,12 +94,64 @@
             padding: 10px;
             word-wrap: break-word;
         }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        .spinner {
+            border: 15px solid #f3f3f3;
+            border-top: 15px solid #007bff;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            top: 51%;
+            left: 44.8%;
+            transform: translate(-50%, -50%);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="search-box">
-            <label for="courseName">Search Courses:</label>
+            <label for="courseName">-:Search Courses:-</label>
             <input type="text" id="courseName" placeholder="Enter Course Name...." style="width: 100%;">
         </div>
         <div class="filters">
@@ -121,6 +174,8 @@
                 <option value="September/October 2024">September/October 2024</option>
                 <option value="July/August 2024">July/August 2024</option>
             </select>
+
+            <button class="submit-button" id="submitButton">Submit</button>
         </div>
     </div>
 
@@ -149,6 +204,10 @@
                 <!-- Intake results will be dynamically added here -->
             </ul>
         </div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -593,6 +652,7 @@
             { university: "Buckinghamshire New University", courseName: "BSc (Hons) Criminology with Foundation Year", courseType: "Undergraduate", intake: "September/October 2024" },
             { university: "Buckinghamshire New University", courseName: "BSc (Hons) Cyber Security", courseType: "Undergraduate", intake: "September/October 2024" },
             { university: "Buckinghamshire New University", courseName: "BSc (Hons) Finance and Accounting", courseType: "Undergraduate", intake: "September/October 2024" },
+            { university: "Buckinghamshire New University", courseName: "BSc (Hons) Finance and Accounting Top-up", courseType: "Undergraduate", intake: "September/October 2024" },
             { university: "Buckinghamshire New University", courseName: "BSc (Hons) Finance and Accounting with Foundation Year", courseType: "Undergraduate", intake: "September/October 2024" },
             { university: "Buckinghamshire New University", courseName: "BSc (Hons) Forensic Psychology", courseType: "Undergraduate", intake: "September/October 2024" },
             { university: "Buckinghamshire New University", courseName: "BSc (Hons) Forensic Psychology with Foundation Year", courseType: "Undergraduate", intake: "September/October 2024" },
@@ -3493,14 +3553,14 @@
             { university: "University of Bedfordshire", courseName: "Business Administration (Logistics and Supply Chain Management) MBA", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Business Administration (Marketing) MBA", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Business Administration MBA", courseType: "Postgraduate", intake: "September/October 2024" },
-            { university: "University of Bedfordshire", courseName: "Business Administration with Placement MBA", courseType: "Postgraduate", intake: "September/October 2024" },
+            { university: "University of Bedfordshire", courseName: "Business Administration MBA with Placement Year", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Business Administration with Data Analytics MBA", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Childhood, Youth and Family Studies MA", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Clinical Exercise Physiology MSc", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Computer Networking MSc", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Computer Networking with Project Management MSc", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Computer Science MSc", courseType: "Postgraduate", intake: "September/October 2024" },
-            { university: "University of Bedfordshire", courseName: "Computer Science with Placement MSc", courseType: "Postgraduate", intake: "September/October 2024" },
+            { university: "University of Bedfordshire", courseName: "Computer Science MSc with Placement Year", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Computer Science with Project Management MSc", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Creative Digital Film Production MA", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Bedfordshire", courseName: "Cyber Security MSc", courseType: "Postgraduate", intake: "September/October 2024" },
@@ -3953,7 +4013,6 @@
             { university: "University of Greenwich", courseName: "Product Design Engineering, MSc", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Greenwich", courseName: "Psychology, MSc (Conversion Degree)", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Greenwich", courseName: "Real Estate Development and Investment, MSc", courseType: "Postgraduate", intake: "September/October 2024" },
-            { university: "University of Greenwich", courseName: "Science, MSc by Research", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Greenwich", courseName: "Social Work, PGDip/MA", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Greenwich", courseName: "Sport and Exercise Psychology, MSc", courseType: "Postgraduate", intake: "September/October 2024" },
             { university: "University of Greenwich", courseName: "Strength and Conditioning, MSc", courseType: "Postgraduate", intake: "September/October 2024" },
@@ -4709,6 +4768,16 @@
         // Call the function to adjust heights
         adjustHeights();
 
+        // Function to show the loading overlay
+        function showLoadingOverlay() {
+            $('#loadingOverlay').show();
+        }
+
+        // Function to hide the loading overlay
+        function hideLoadingOverlay() {
+            $('#loadingOverlay').hide();
+        }
+
         // Populate University Name filter options
         populateUniversityFilter();
 
@@ -4718,18 +4787,13 @@
         // Initialize Select2 for University Name filter
         $('#universityFilter').select2();
 
-        // Event listener for filter change
-        $('#universityFilter').on('change', filterCourses);
-        $('#courseTypeFilter').on('change', filterCourses);
-        $('#intakeFilter').on('change', filterCourses);
-        // Event listener for input change
-        $('#courseName').on('input', filterCourses);
-
-        // Display all courses when "All Universities" is selected
-        $('#universityFilter').on('select2:select', function (e) {
-            if (e.params.data.id === '') {
-                displayResults(courses);
-            }
+        // Event listener for submit button click
+        $('#submitButton').on('click', function () {
+            showLoadingOverlay();
+            setTimeout(function () {
+                filterCourses();
+                hideLoadingOverlay();
+            }, 1000); // Simulate loading time
         });
 
         // Set default selection to "All Universities"
