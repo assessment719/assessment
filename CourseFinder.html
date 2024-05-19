@@ -4675,19 +4675,39 @@
         // Function to adjust the heights of the result items
         function adjustHeights() {
             const resultLists = $('.result-list');
-            const rows = Math.ceil(resultLists.first().children().length / 4);
+            const itemsPerRow = 1;
+            const rows = Math.ceil(resultLists.first().children().length / itemsPerRow);
 
             for (let i = 0; i < rows; i++) {
-                const rowItems = $(`.result-list .result-item:nth-child(n+${i * 4 + 1}):nth-child(-n+${i * 4 + 4})`);
+                const rowItems = $(`.result-list .result-item:nth-child(n+${i * itemsPerRow + 1}):nth-child(-n+${i * itemsPerRow + itemsPerRow})`);
                 let maxHeight = 0;
+
+                // Determine if any item in the row is overflowing
+                let isOverflowing = false;
                 rowItems.each(function () {
-                    if ($(this).height() > maxHeight) {
-                        maxHeight = $(this).height();
+                    if (this.scrollHeight > $(this).height()) {
+                        isOverflowing = true;
                     }
                 });
-                rowItems.height(maxHeight);
+
+                // If any item is overflowing, find the maximum height and set it
+                if (isOverflowing) {
+                    rowItems.each(function () {
+                        const itemHeight = $(this).height();
+                        if (itemHeight > maxHeight) {
+                            maxHeight = itemHeight;
+                        }
+                    });
+                    rowItems.height(maxHeight);
+                } else {
+                    // Reset height to natural height for non-overflowing rows
+                    rowItems.css('height', 'auto');
+                }
             }
         }
+
+        // Call the function to adjust heights
+        adjustHeights();
 
         // Populate University Name filter options
         populateUniversityFilter();
