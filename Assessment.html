@@ -87,6 +87,16 @@
 
         .button:hover {
             background-color: #0056b3;
+            animation: transform 1s forwards;
+        }
+
+        @keyframes transform {
+            from{
+                transform: scale(1);
+            } 
+            to {
+                transform: scale(1.1);
+            }
         }
 
         .button.active {
