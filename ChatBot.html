@@ -142,8 +142,7 @@
 
         .input-container {
             display: none;
-            margin-top: 15px;
-            margin-left: 152.5px;;
+            width: auto;
         }
     </style>
 </head>
@@ -255,7 +254,9 @@
         }
 
         function showInputContainer() {
-            inputContainer.style.display = 'block';
+            inputContainer.style.display = 'flex';
+            inputContainer.style.justifyContent = 'center';
+            inputContainer.style.alignItems = 'center';
         }
 
         function hideInputContainer() {
