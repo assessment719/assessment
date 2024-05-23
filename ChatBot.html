@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Chat Support</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-container {
+            max-width: 500px;
+            border: solid;
+            border-color: black;
+            margin: 50px auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            /* Make the chat container the positioning context */
+        }
+
+        .chat-header {
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            text-align: center;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .chat-body {
+            height: 400px;
+            overflow-y: scroll;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message .content {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 70%;
+        }
+
+        .message.bot .content {
+            background: #f1f1f1;
+        }
+
+        .message.user .content {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .message .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .message.user .avatar {
+            display: none;
+        }
+
+        .menu-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border-top: 1px solid #ddd;
+            position: relative;
+            /* Ensure it’s the reference point for the question list */
+            z-index: 5;
+            /* Lower z-index than the question list */
+        }
+
+        .question-list {
+            display: none;
+            /* Initially hidden */
+            position: absolute;
+            /* Position absolutely within the chat container */
+            bottom: 50px;
+            /* Position it above the menu icon */
+            left: 0;
+            /* Align to the left */
+            width: 100%;
+            /* Match the width of the chat container */
+            background: #fff;
+            /* Ensure it has a background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Optional: add a shadow for better visibility */
+            z-index: 10;
+            /* Ensure it appears above other elements */
+        }
+
+        .question-list div {
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .question-list div:hover {
+            background: #007bff;
+            color: #fff;
+        }
+
+        .chat-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        .clear-button {
+            padding: 5px 10px;
+            background: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .clear-button:hover {
+            background: #ff1a1a;
+        }
+
+        .input-container {
+            display: none;
+            margin-top: 15px;
+            margin-left: 137px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            FAQ Chat Support
+        </div>
+        <div class="chat-body" id="chatBody">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="question-list" id="questionList">
+            <!-- Questions will appear here -->
+        </div>
+        <div class="input-container" id="inputContainer">
+            <label for="marksInput">Enter Marks:</label>
+            <input type="number" id="marksInput" min="0" max="100" value="0">
+            <button type="button" onclick="submitMarks()">Submit</button>
+        </div>
+        <div class="menu-icon" onclick="toggleQuestionList()">☰ Frequently Asked Questions ☰</div>
+        <div class="chat-footer">
+            <button class="clear-button" onclick="clearMessages()">Clear Messages</button>
+        </div>
+    </div>
+    <script>
+        const chatBody = document.getElementById('chatBody');
+        const questionList = document.getElementById('questionList');
+        const inputContainer = document.getElementById('inputContainer');
+        const marksInput = document.getElementById('marksInput');
+
+        const preloadedQA = {
+            "What is your name?": "I am a chatbot created to assist you.",
+            "How can you help me?": "I can answer your questions and provide information.",
+            "I have queeries regarding entry requirements": "What kind of entry requirements you are concerned about? Choose your type of query from the menu.",
+        };
+
+        const entryRequirementOptions = {
+            "Academics": "For Academics entry requirements, you need to provide transcripts and certificates.",
+            "English Waiver": "An English waiver may be provided if you have completed a degree in an English-speaking country.",
+            "English Language Test": "You need to provide scores from an approved English language test like TOEFL or IELTS.",
+            "Restart the chat": "Hello",
+        };
+
+        function addMessage(content, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+
+            const avatar = document.createElement('img');
+            avatar.src = "https://www.crizac.com/catalog/view/new_design/img/favicon_crizac.png";
+            avatar.classList.add('avatar');
+
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('content');
+            messageContent.innerHTML = content; // Use innerHTML instead of textContent to allow HTML tags
+
+            if (sender === 'bot') {
+                messageElement.appendChild(avatar);
+            }
+
+            messageElement.appendChild(messageContent);
+            chatBody.appendChild(messageElement);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function toggleQuestionList() {
+            questionList.style.display = questionList.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function selectQuestion(question) {
+            addMessage(question, 'user');
+            setTimeout(() => {
+                const botResponse = preloadedQA[question] || "I'm sorry, I don't understand that.";
+                addMessage(botResponse, 'bot');
+                if (question === "I have queeries regarding entry requirements") {
+                    updateQuestionList(entryRequirementOptions);
+                }
+            }, 500);
+            toggleQuestionList();
+        }
+
+        function updateQuestionList(questions) {
+            questionList.innerHTML = '';
+            for (let question in questions) {
+                const questionElement = document.createElement('div');
+                questionElement.textContent = question;
+                questionElement.onclick = () => selectEntryRequirement(question);
+                questionList.appendChild(questionElement);
+            }
+        }
+
+        let selectedEntryRequirement = '';
+
+        function selectEntryRequirement(option) {
+            selectedEntryRequirement = option; // Track the selected option
+            addMessage(option, 'user');
+            setTimeout(() => {
+                if (selectedEntryRequirement === 'Academics') {
+                    const botResponse = "How many percentile marks you have got in your exam? Please put that below.";
+                    addMessage(botResponse, 'bot');
+                    showInputContainer();
+                } else {
+                    const botResponse = entryRequirementOptions[option];
+                    addMessage(botResponse, 'bot');
+                    hideInputContainer();
+                    loadInitialQuestions();
+                }
+            }, 500);
+            toggleQuestionList();
+        }
+
+        function showInputContainer() {
+            inputContainer.style.display = 'block';
+        }
+
+        function hideInputContainer() {
+            inputContainer.style.display = 'none';
+        }
+
+        function submitMarks() {
+            const marks = marksInput.value;
+            addMessage(`I have scored ${marks}`, 'user');
+            inputContainer.style.display = 'none';
+            marksInput.value = '0';
+            setTimeout(() => {
+                if (selectedEntryRequirement === 'Academics' && marks >= 90) {
+                    const botResponse = `You are eligible to get admission in the following universities:<br>1. Anglia Ruskin University<br>2. Coventry University`;
+                    addMessage(botResponse, 'bot');
+                } else {
+                    const botResponse = "Unfortunately, you do not meet the minimum eligibility criteria.";
+                    addMessage(botResponse, 'bot');
+                }
+                selectedEntryRequirement = ''; // Reset the variable after handling
+            }, 500);
+        }
+
+        function clearMessages() {
+            chatBody.innerHTML = '';
+            addMessage("Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.", 'bot');
+            loadInitialQuestions();
+            inputContainer.style.display = 'none';
+        }
+
+        function loadInitialQuestions() {
+            questionList.innerHTML = '';
+            for (let question in preloadedQA) {
+                const questionElement = document.createElement('div');
+                questionElement.textContent = question;
+                questionElement.onclick = () => selectQuestion(question);
+                questionList.appendChild(questionElement);
+            }
+        }
+
+        // Adding some initial bot message and loading questions
+        window.onload = function () {
+            addMessage("Hello! How can I assist you today?<br>Please choose your querry from the below FAQ Menu.", 'bot');
+            loadInitialQuestions();
+        };
+    </script>
+</body>
+</html>
