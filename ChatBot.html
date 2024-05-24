@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,6 +45,7 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 15px;
+            font-family: "Times New Roman", Times, serif;
         }
 
         .message.bot {
@@ -97,7 +99,8 @@
         .question-list {
             display: none;
             position: absolute;
-            bottom: 50px;
+            font-family: "Times New Roman", Times, serif;
+            bottom: 85px;
             left: 0;
             width: 100%;
             background: #fff;
@@ -142,10 +145,18 @@
 
         .input-container {
             display: none;
-            width: auto;
+            position: absolute;
+            bottom: 44px;
+            left: 0;
+            width: 100%;
+            height: 41px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
         }
     </style>
 </head>
+
 <body>
     <div class="chat-container">
         <div class="chat-header">
@@ -176,15 +187,25 @@
         const preloadedQA = {
             "What is your name?": "I am a chatbot created to assist you.",
             "How can you help me?": "I can answer your questions and provide information.",
-            "I have queeries regarding entry requirements": "What kind of entry requirements you are concerned about? Choose your type of query from the menu.",
+            "I have queries regarding undergraduate entry requirements": "What kind of undergraduate entry requirements you are concerned about? Choose your type of query from the menu.",
+            "I have queries regarding postgraduate entry requirements": "What kind of postgraduate entry requirements you are concerned about? Choose your type of query from the menu.",
         };
 
-        const entryRequirementOptions = {
-            "Academics": "For Academics entry requirements, you need to provide transcripts and certificates.",
-            "English Waiver": "An English waiver may be provided if you have completed a degree in an English-speaking country.",
-            "English Language Test": "You need to provide scores from an approved English language test like TOEFL or IELTS.",
-            "Restart the chat": "Hello",
+        const ugentryRequirementOptions = {
+            "Academic requirements for undergraduate courses": "For Academic entry requirements, you need to provide transcripts and certificates.",
+            "English Waiver requirements for undergraduate courses": "An English waiver may be provided if you have completed a degree in an English-speaking country.",
+            "English Language Test requirements for undergraduate courses": "You need to provide scores from an approved English language test like TOEFL or IELTS.",
+            "Restart the chat": "Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.",
         };
+
+        const pgentryRequirementOptions = {
+            "Academic requirements for postgraduate courses": "For Academic entry requirements, you need to provide transcripts and certificates.",
+            "English Waiver requirements for postgraduate courses": "An English waiver may be provided if you have completed a degree in an English-speaking country.",
+            "English Language Test requirements for postgraduate courses": "You need to provide scores from an approved English language test like TOEFL or IELTS.",
+            "Restart the chat": "Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.",
+        };
+
+        let selectedCourseType = ''; // Track the selected course type
 
         function addMessage(content, sender) {
             const messageElement = document.createElement('div');
@@ -216,8 +237,12 @@
             setTimeout(() => {
                 const botResponse = preloadedQA[question] || "I'm sorry, I don't understand that.";
                 addMessage(botResponse, 'bot');
-                if (question === "I have queeries regarding entry requirements") {
-                    updateQuestionList(entryRequirementOptions);
+                if (question === "I have queries regarding undergraduate entry requirements") {
+                    selectedCourseType = 'ug';
+                    updateQuestionList(ugentryRequirementOptions);
+                } else if (question === "I have queries regarding postgraduate entry requirements") {
+                    selectedCourseType = 'pg';
+                    updateQuestionList(pgentryRequirementOptions);
                 }
             }, 500);
             toggleQuestionList();
@@ -239,15 +264,23 @@
             selectedEntryRequirement = option; // Track the selected option
             addMessage(option, 'user');
             setTimeout(() => {
-                if (selectedEntryRequirement === 'Academics') {
-                    const botResponse = "How many percentile marks you have got in your exam? Please put that below.";
+                if (selectedEntryRequirement === 'Academic requirements for undergraduate courses') {
+                    const botResponse = "How many percentile marks you have got in your higher secondary exam? Please put that below.";
                     addMessage(botResponse, 'bot');
                     showInputContainer();
+                } else if (selectedEntryRequirement === 'Academic requirements for postgraduate courses') {
+                    const botResponse = "How many percentile marks you have got in your undergraduate exam? Please put that below.";
+                    addMessage(botResponse, 'bot');
+                    showInputContainer();
+                } else if (selectedEntryRequirement === 'Restart the chat') {
+                    addMessage("Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.", 'bot');
+                    loadInitialQuestions();
+                    hideInputContainer();
+                    selectedCourseType = ''; // Reset the course type
                 } else {
-                    const botResponse = entryRequirementOptions[option];
+                    const botResponse = selectedCourseType === 'ug' ? ugentryRequirementOptions[option] : pgentryRequirementOptions[option];
                     addMessage(botResponse, 'bot');
                     hideInputContainer();
-                    loadInitialQuestions();
                 }
             }, 500);
             toggleQuestionList();
@@ -269,8 +302,11 @@
             inputContainer.style.display = 'none';
             marksInput.value = '0';
             setTimeout(() => {
-                if (selectedEntryRequirement === 'Academics' && marks >= 90) {
+                if (selectedEntryRequirement === 'Academic requirements for undergraduate courses' && marks >= 90) {
                     const botResponse = `You are eligible to get admission in the following universities:<br>1. Anglia Ruskin University<br>2. Coventry University`;
+                    addMessage(botResponse, 'bot');
+                } else if (selectedEntryRequirement === 'Academic requirements for postgraduate courses' && marks >= 60) {
+                    const botResponse = `You are eligible to get admission in the following universities:<br>1. Birmingham City University<br>2. Bangor University`;
                     addMessage(botResponse, 'bot');
                 } else {
                     const botResponse = "Unfortunately, you do not meet the minimum eligibility criteria.";
@@ -284,7 +320,8 @@
             chatBody.innerHTML = '';
             addMessage("Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.", 'bot');
             loadInitialQuestions();
-            inputContainer.style.display = 'none';
+            hideInputContainer();
+            selectedCourseType = ''; // Reset the course type
         }
 
         function loadInitialQuestions() {
@@ -304,4 +341,5 @@
         };
     </script>
 </body>
+
 </html>
