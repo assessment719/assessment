@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ Chat Support</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,8 +16,6 @@
 
         .chat-container {
             max-width: 500px;
-            border: solid;
-            border-color: black;
             margin: 50px auto;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -30,13 +29,13 @@
             background: #007bff;
             color: #fff;
             text-align: center;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
 
         .chat-body {
             height: 400px;
-            overflow-y: scroll;
+            overflow-y: auto;
             padding: 20px;
             border-bottom: 1px solid #ddd;
         }
@@ -45,7 +44,6 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 15px;
-            font-family: "Times New Roman", Times, serif;
         }
 
         .message.bot {
@@ -93,25 +91,24 @@
             color: #fff;
             border-top: 1px solid #ddd;
             position: relative;
-            z-index: 5;
         }
 
         .question-list {
             display: none;
             position: absolute;
-            font-family: "Times New Roman", Times, serif;
-            bottom: 87px;
+            bottom: 85px;
             left: 0;
             width: 100%;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             z-index: 10;
+            max-height: 300px;
+            overflow-y: auto;
         }
 
         .question-list div {
-            padding: 5px 10px;
+            padding: 10px;
             cursor: pointer;
-            border-radius: 5px;
         }
 
         .question-list div:hover {
@@ -123,7 +120,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
             padding: 10px;
             background: #007bff;
             color: #fff;
@@ -149,10 +145,26 @@
             bottom: 44px;
             left: 0;
             width: 100%;
-            height: 44px;
+            padding: 10px;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-container label {
+            margin-right: 10px;
+        }
+
+        .input-container input {
+            width: 60px;
+            margin-right: 10px;
+        }
+
+        .select2-container {
+            width: 100% !important;
         }
     </style>
 </head>
@@ -178,6 +190,8 @@
             <button class="clear-button" onclick="clearMessages()">Clear Messages</button>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script>
         const chatBody = document.getElementById('chatBody');
         const questionList = document.getElementById('questionList');
@@ -187,26 +201,41 @@
         const preloadedQA = {
             "What is your name?": "I am a chatbot created to assist you.",
             "How can you help me?": "I can answer your questions and provide information.",
-            "I have queries regarding undergraduate entry requirements": "What kind of undergraduate entry requirements you are concerned about? Choose your type of query from the menu.",
-            "I have queries regarding postgraduate entry requirements": "What kind of postgraduate entry requirements you are concerned about? Choose your type of query from the menu.",
+            "I have queries regarding undergraduate entry requirements": "What kind of undergraduate entry requirements are you concerned about? Choose your type of query from the menu.",
+            "I have queries regarding postgraduate entry requirements": "What kind of postgraduate entry requirements are you concerned about? Choose your type of query from the menu.",
         };
 
-        const ugentryRequirementOptions = {
-            "Academic requirements for undergraduate courses": "For Academic entry requirements, you need to provide transcripts and certificates.",
+        const ugEntryRequirementOptions = {
+            "Academic requirements for undergraduate courses": "Please select your board.",
             "English Waiver requirements for undergraduate courses": "An English waiver may be provided if you have completed a degree in an English-speaking country.",
             "English Language Test requirements for undergraduate courses": "You need to provide scores from an approved English language test like TOEFL or IELTS.",
-            "Restart the chat": "Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.",
+            "Restart the chat": "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.",
         };
 
-        const pgentryRequirementOptions = {
-            "Academic requirements for postgraduate courses": "For Academic entry requirements, you need to provide transcripts and certificates.",
+        const pgEntryRequirementOptions = {
+            "Academic requirements for postgraduate courses": "Please select your university.",
             "English Waiver requirements for postgraduate courses": "An English waiver may be provided if you have completed a degree in an English-speaking country.",
             "English Language Test requirements for postgraduate courses": "You need to provide scores from an approved English language test like TOEFL or IELTS.",
-            "Restart the chat": "Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.",
+            "Restart the chat": "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.",
+        };
+
+        const ugBoards = {
+            "CBSE": "Central Board of Secondary Education",
+            "ICSE": "Indian Certificate of Secondary Education",
+            "State Board": "Various State Boards",
+        };
+
+        const pgUniversities = {
+            "Delhi University": "University of Delhi",
+            "Mumbai University": "University of Mumbai",
+            "Bangalore University": "Bangalore University",
         };
 
         let selectedCourseType = ''; // Track the selected course type
+        let selectedEntryRequirement = ''; // Track the selected entry requirement
+        let selectedBoardOrUniversity = ''; // Track the selected board or university
 
+        // Add a message to the chat
         function addMessage(content, sender) {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message', sender);
@@ -217,7 +246,7 @@
 
             const messageContent = document.createElement('div');
             messageContent.classList.add('content');
-            messageContent.innerHTML = content; // Use innerHTML instead of textContent to allow HTML tags
+            messageContent.innerHTML = content;
 
             if (sender === 'bot') {
                 messageElement.appendChild(avatar);
@@ -228,10 +257,12 @@
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
+        // Toggle the display of the question list
         function toggleQuestionList() {
             questionList.style.display = questionList.style.display === 'none' ? 'block' : 'none';
         }
 
+        // Handle selection of a question from the initial list
         function selectQuestion(question) {
             addMessage(question, 'user');
             setTimeout(() => {
@@ -239,15 +270,16 @@
                 addMessage(botResponse, 'bot');
                 if (question === "I have queries regarding undergraduate entry requirements") {
                     selectedCourseType = 'ug';
-                    updateQuestionList(ugentryRequirementOptions);
+                    updateQuestionList(ugEntryRequirementOptions);
                 } else if (question === "I have queries regarding postgraduate entry requirements") {
                     selectedCourseType = 'pg';
-                    updateQuestionList(pgentryRequirementOptions);
+                    updateQuestionList(pgEntryRequirementOptions);
                 }
             }, 500);
             toggleQuestionList();
         }
 
+        // Update the question list based on the selected course type
         function updateQuestionList(questions) {
             questionList.innerHTML = '';
             for (let question in questions) {
@@ -258,72 +290,118 @@
             }
         }
 
-        let selectedEntryRequirement = '';
-
+        // Handle selection of an entry requirement option
         function selectEntryRequirement(option) {
-            selectedEntryRequirement = option; // Track the selected option
+            selectedEntryRequirement = option;
             addMessage(option, 'user');
             setTimeout(() => {
-                if (selectedEntryRequirement === 'Academic requirements for undergraduate courses') {
-                    const botResponse = "How many percentile marks you have got in your higher secondary exam? Please put that below.";
-                    addMessage(botResponse, 'bot');
-                    showInputContainer();
-                } else if (selectedEntryRequirement === 'Academic requirements for postgraduate courses') {
-                    const botResponse = "How many percentile marks you have got in your undergraduate exam? Please put that below.";
-                    addMessage(botResponse, 'bot');
-                    showInputContainer();
-                } else if (selectedEntryRequirement === 'Restart the chat') {
-                    addMessage("Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.", 'bot');
+                let botResponse;
+                if (option === 'Academic requirements for undergraduate courses' || option === 'Academic requirements for postgraduate courses') {
+                    updateOptionList(option === 'Academic requirements for undergraduate courses' ? ugBoards : pgUniversities);
+                    botResponse = "Please select your " + (selectedCourseType === 'ug' ? "board" : "university") + " from the list.";
+                } else if (option === 'Restart the chat') {
+                    botResponse = "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.";
                     loadInitialQuestions();
                     hideInputContainer();
-                    selectedCourseType = ''; // Reset the course type
                 } else {
-                    const botResponse = selectedCourseType === 'ug' ? ugentryRequirementOptions[option] : pgentryRequirementOptions[option];
-                    addMessage(botResponse, 'bot');
+                    botResponse = selectedCourseType === 'ug' ? ugEntryRequirementOptions[option] : pgEntryRequirementOptions[option];
                     hideInputContainer();
                 }
+                addMessage(botResponse, 'bot');
             }, 500);
             toggleQuestionList();
         }
 
-        function showInputContainer() {
-            inputContainer.style.display = 'flex';
-            inputContainer.style.justifyContent = 'center';
-            inputContainer.style.alignItems = 'center';
+        // Update the option list for board or university selection
+        function updateOptionList(options) {
+            questionList.innerHTML = '<select class="js-example-basic-single" id="selectOptions"><option></option></select>';
+            for (let option in options) {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = options[option];
+                document.getElementById('selectOptions').appendChild(optionElement);
+            }
+            $('.js-example-basic-single').select2({
+                placeholder: "Select an option",
+                allowClear: true
+            });
+            $('#selectOptions').on('change', function () {
+                const selectedOption = $(this).val();
+                if (selectedOption) {
+                    selectBoardOrUniversity(selectedOption);
+                }
+            });
+            questionList.style.display = 'block';
         }
 
+        // Handle selection of a board or university
+        function selectBoardOrUniversity(option) {
+            selectedBoardOrUniversity = option;
+            addMessage(option, 'user');
+            setTimeout(() => {
+                let botResponse = `How many percentile marks have you scored in your ${selectedCourseType === 'ug' ? 'higher secondary' : 'undergraduate'} exam? Please enter below.`;
+                addMessage(botResponse, 'bot');
+                showInputContainer();
+            }, 500);
+            questionList.style.display = 'none';
+        }
+
+        // Show the input container for marks input
+        function showInputContainer() {
+            inputContainer.style.display = 'flex';
+        }
+
+        // Hide the input container for marks input
         function hideInputContainer() {
             inputContainer.style.display = 'none';
         }
 
+        // Handle submission of marks
         function submitMarks() {
-            const marks = marksInput.value;
+            const marks = parseInt(marksInput.value, 10);
             addMessage(`I have scored ${marks}`, 'user');
-            inputContainer.style.display = 'none';
+            hideInputContainer();
             marksInput.value = '0';
             setTimeout(() => {
-                if (selectedEntryRequirement === 'Academic requirements for undergraduate courses' && marks >= 90) {
-                    const botResponse = `You are eligible to get admission in the following universities:<br>1. Anglia Ruskin University<br>2. Coventry University`;
-                    addMessage(botResponse, 'bot');
-                } else if (selectedEntryRequirement === 'Academic requirements for postgraduate courses' && marks >= 60) {
-                    const botResponse = `You are eligible to get admission in the following universities:<br>1. Birmingham City University<br>2. Bangor University`;
-                    addMessage(botResponse, 'bot');
-                } else {
-                    const botResponse = "Unfortunately, you do not meet the minimum eligibility criteria.";
-                    addMessage(botResponse, 'bot');
+                let botResponse;
+                if (selectedEntryRequirement === 'Academic requirements for undergraduate courses') {
+                    if (selectedBoardOrUniversity === 'CBSE' && marks >= 90) {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. Anglia Ruskin University<br>2. Coventry University";
+                    } else if (selectedBoardOrUniversity === 'ICSE' && marks >= 85) {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. Birmingham City University<br>2. Bangor University";
+                    } else {
+                        botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected board.";
+                    }
+                } else if (selectedEntryRequirement === 'Academic requirements for postgraduate courses') {
+                    if (selectedBoardOrUniversity === 'Delhi University' && marks >= 60) {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. University of Birmingham<br>2. University of Glasgow";
+                    } else if (selectedBoardOrUniversity === 'Mumbai University' && marks >= 55) {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. University of Leeds<br>2. University of Manchester";
+                    } else {
+                        botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected university.";
+                    }
                 }
-                selectedEntryRequirement = ''; // Reset the variable after handling
+                addMessage(botResponse, 'bot');
             }, 500);
         }
 
+        // Clear all messages from the chat
         function clearMessages() {
             chatBody.innerHTML = '';
-            addMessage("Hello! How can I assist you again?<br>Please choose your querry from the below FAQ Menu.", 'bot');
+            addMessage("Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.", 'bot');
             loadInitialQuestions();
+            selectedCourseType = '';
+            selectedEntryRequirement = '';
+            selectedBoardOrUniversity = '';
             hideInputContainer();
-            selectedCourseType = ''; // Reset the course type
+
+            // Check if the question list is open and hide it
+            if (questionList.style.display === 'block') {
+                questionList.style.display = 'none';
+            }
         }
 
+        // Load the initial questions into the question list
         function loadInitialQuestions() {
             questionList.innerHTML = '';
             for (let question in preloadedQA) {
@@ -334,10 +412,11 @@
             }
         }
 
-        // Adding some initial bot message and loading questions
+        // Initialize the chat with a welcome message and load initial questions
         window.onload = function () {
-            addMessage("Hello! How can I assist you today?<br>Please choose your querry from the below FAQ Menu.", 'bot');
+            addMessage("Hello! How can I assist you today?<br>Please choose your query from the FAQ menu.", 'bot');
             loadInitialQuestions();
+            hideInputContainer(); // Ensure the input container is hidden on load
         };
     </script>
 </body>
