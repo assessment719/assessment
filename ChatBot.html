@@ -16,10 +16,12 @@
 
         .chat-container {
             max-width: 500px;
+            border: solid;
+            border-color: #007bff;
             margin: 50px auto;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            border-radius: 18px;
             overflow: hidden;
             position: relative;
         }
@@ -382,6 +384,13 @@
                     }
                 }
                 addMessage(botResponse, 'bot');
+
+                // Update question list based on previously selected course type
+                if (selectedCourseType === 'ug') {
+                    updateQuestionList(ugEntryRequirementOptions);
+                } else if (selectedCourseType === 'pg') {
+                    updateQuestionList(pgEntryRequirementOptions);
+                }
             }, 500);
         }
 
