@@ -165,8 +165,31 @@
             margin-right: 10px;
         }
 
+        .select2-container--default .select2-selection--single {
+            height: 40px;
+            padding-left: 16px;
+            padding-right: 16px;
+            font-size: 16px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 40px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px;
+            top: 0px;
+            right: 10px;
+        }
+
         .select2-container {
+            position: relative;
+            z-index: 1000;
             width: 100% !important;
+        }
+
+        #selectOptions {
+            width: 100%;
         }
     </style>
 </head>
@@ -209,15 +232,16 @@
 
         const ugEntryRequirementOptions = {
             "Academic requirements for undergraduate courses": "Please select your board.",
-            "English Waiver requirements for undergraduate courses": "An English waiver may be provided if you have completed a degree in an English-speaking country.",
-            "English Language Test requirements for undergraduate courses": "You need to provide scores from an approved English language test like TOEFL or IELTS.",
+            "English Waiver requirements for undergraduate courses": "Please select your board of education.",
+            "English Language Test requirements for undergraduate courses": "Please select your English test.",
             "Restart the chat": "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.",
         };
 
         const pgEntryRequirementOptions = {
             "Academic requirements for postgraduate courses": "Please select your university.",
-            "English Waiver requirements for postgraduate courses": "An English waiver may be provided if you have completed a degree in an English-speaking country.",
-            "English Language Test requirements for postgraduate courses": "You need to provide scores from an approved English language test like TOEFL or IELTS.",
+            "English Waiver requirements for postgraduate courses": "Please select your board of education.",
+            "MOI Waiver requirements for postgraduate courses": "Please select your university of education.",
+            "English Language Test requirements for postgraduate courses": "Please select your English test.",
             "Restart the chat": "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.",
         };
 
@@ -233,11 +257,16 @@
             "Bangalore University": "Bangalore University",
         };
 
-        let selectedCourseType = ''; // Track the selected course type
-        let selectedEntryRequirement = ''; // Track the selected entry requirement
-        let selectedBoardOrUniversity = ''; // Track the selected board or university
+        const englishTests = {
+            "TOEFL": "TOEFL",
+            "IELTS": "IELTS",
+            "PTE": "PTE",
+        };
 
-        // Add a message to the chat
+        let selectedCourseType = '';
+        let selectedEntryRequirement = '';
+        let selectedOption = '';
+
         function addMessage(content, sender) {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message', sender);
@@ -259,12 +288,10 @@
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
-        // Toggle the display of the question list
         function toggleQuestionList() {
             questionList.style.display = questionList.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Handle selection of a question from the initial list
         function selectQuestion(question) {
             addMessage(question, 'user');
             setTimeout(() => {
@@ -281,7 +308,6 @@
             toggleQuestionList();
         }
 
-        // Update the question list based on the selected course type
         function updateQuestionList(questions) {
             questionList.innerHTML = '';
             for (let question in questions) {
@@ -292,7 +318,6 @@
             }
         }
 
-        // Handle selection of an entry requirement option
         function selectEntryRequirement(option) {
             selectedEntryRequirement = option;
             addMessage(option, 'user');
@@ -300,7 +325,16 @@
                 let botResponse;
                 if (option === 'Academic requirements for undergraduate courses' || option === 'Academic requirements for postgraduate courses') {
                     updateOptionList(option === 'Academic requirements for undergraduate courses' ? ugBoards : pgUniversities);
-                    botResponse = "Please select your " + (selectedCourseType === 'ug' ? "board" : "university") + " from the list.";
+                    botResponse = "Please select your " + (selectedCourseType === 'ug' ? "board" : "university") + " of education from the list.";
+                } else if (option === 'English Waiver requirements for undergraduate courses' || option === 'English Waiver requirements for postgraduate courses') {
+                    updateOptionList(ugBoards);
+                    botResponse = "Please select your board of education from the list.";
+                } else if (option === 'MOI Waiver requirements for postgraduate courses') {
+                    updateOptionList(pgUniversities);
+                    botResponse = "Please select your university of education from the list.";
+                } else if (option === 'English Language Test requirements for undergraduate courses' || option === 'English Language Test requirements for postgraduate courses') {
+                    updateOptionList(englishTests);
+                    botResponse = "Please select your English test from the list.";
                 } else if (option === 'Restart the chat') {
                     botResponse = "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.";
                     loadInitialQuestions();
@@ -314,7 +348,6 @@
             toggleQuestionList();
         }
 
-        // Update the option list for board or university selection
         function updateOptionList(options) {
             questionList.innerHTML = '<select class="js-example-basic-single" id="selectOptions"><option></option></select>';
             for (let option in options) {
@@ -327,38 +360,59 @@
                 placeholder: "Select an option",
                 allowClear: true
             });
+            
             $('#selectOptions').on('change', function () {
                 const selectedOption = $(this).val();
                 if (selectedOption) {
-                    selectBoardOrUniversity(selectedOption);
+                    selectBoardOrUniversityOrTest(selectedOption);
+                    $(this).val(null).trigger('change');
                 }
             });
             questionList.style.display = 'block';
         }
 
-        // Handle selection of a board or university
-        function selectBoardOrUniversity(option) {
-            selectedBoardOrUniversity = option;
+        function selectBoardOrUniversityOrTest(option) {
+            selectedOption = option;
             addMessage(option, 'user');
             setTimeout(() => {
-                let botResponse = `How many percentile marks have you scored in your ${selectedCourseType === 'ug' ? 'higher secondary' : 'undergraduate'} exam? Please enter below.`;
+                let botResponse;
+                if (selectedEntryRequirement === 'Academic requirements for undergraduate courses' || selectedEntryRequirement === 'Academic requirements for postgraduate courses') {
+                    botResponse = `How many percentile marks have you scored in your ${selectedCourseType === 'ug' ? 'higher secondary' : 'undergraduate'} exam? Please enter below.`;
+                    showInputContainer();
+                } else if (selectedEntryRequirement === 'English Waiver requirements for undergraduate courses' || selectedEntryRequirement === 'English Waiver requirements for postgraduate courses') {
+                    botResponse = `Please enter your score in your higher secondary exam below to check if you qualify for an English waiver.`;
+                    showInputContainer();
+                } else if (selectedEntryRequirement === 'English Language Test requirements for undergraduate courses' || selectedEntryRequirement === 'English Language Test requirements for postgraduate courses') {
+                    botResponse = `Please enter your score in the ${option} exam below to check if you meet the English language requirements.`;
+                    showInputContainer();
+                } else if (selectedEntryRequirement === 'MOI Waiver requirements for postgraduate courses') {
+                    if (selectedOption === 'Delhi University') {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. University of Birmingham<br>2. University of Glasgow";
+                    } else if (selectedOption === 'Mumbai University') {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. University of Leeds<br>2. University of Manchester";
+                    } else {
+                        botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected university.";
+                    }
+
+                    if (selectedCourseType === 'ug') {
+                        updateQuestionList(ugEntryRequirementOptions);
+                    } else if (selectedCourseType === 'pg') {
+                        updateQuestionList(pgEntryRequirementOptions);
+                    }
+                }
                 addMessage(botResponse, 'bot');
-                showInputContainer();
             }, 500);
             questionList.style.display = 'none';
         }
 
-        // Show the input container for marks input
         function showInputContainer() {
             inputContainer.style.display = 'flex';
         }
 
-        // Hide the input container for marks input
         function hideInputContainer() {
             inputContainer.style.display = 'none';
         }
 
-        // Handle submission of marks
         function submitMarks() {
             const marks = parseInt(marksInput.value, 10);
             addMessage(`I have scored ${marks}`, 'user');
@@ -367,25 +421,38 @@
             setTimeout(() => {
                 let botResponse;
                 if (selectedEntryRequirement === 'Academic requirements for undergraduate courses') {
-                    if (selectedBoardOrUniversity === 'CBSE' && marks >= 90) {
+                    if (selectedOption === 'CBSE' && marks >= 90) {
                         botResponse = "You are eligible to get admission in the following universities:<br>1. Anglia Ruskin University<br>2. Coventry University";
-                    } else if (selectedBoardOrUniversity === 'ICSE' && marks >= 85) {
+                    } else if (selectedOption === 'ICSE' && marks >= 85) {
                         botResponse = "You are eligible to get admission in the following universities:<br>1. Birmingham City University<br>2. Bangor University";
                     } else {
                         botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected board.";
                     }
                 } else if (selectedEntryRequirement === 'Academic requirements for postgraduate courses') {
-                    if (selectedBoardOrUniversity === 'Delhi University' && marks >= 60) {
+                    if (selectedOption === 'Delhi University' && marks >= 60) {
                         botResponse = "You are eligible to get admission in the following universities:<br>1. University of Birmingham<br>2. University of Glasgow";
-                    } else if (selectedBoardOrUniversity === 'Mumbai University' && marks >= 55) {
+                    } else if (selectedOption === 'Mumbai University' && marks >= 55) {
                         botResponse = "You are eligible to get admission in the following universities:<br>1. University of Leeds<br>2. University of Manchester";
                     } else {
                         botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected university.";
                     }
+                } else if (selectedEntryRequirement === 'English Waiver requirements for undergraduate courses' || selectedEntryRequirement === 'English Waiver requirements for postgraduate courses') {
+                    if (selectedOption === 'CBSE' && marks >= 70) {
+                        botResponse = "You qualify for an English waiver based on your academic performance.";
+                    } else if (selectedOption === 'ICSE' && marks >= 65) {
+                        botResponse = "You qualify for an English waiver based on your academic performance.";
+                    } else {
+                        botResponse = "Unfortunately, you do not qualify for an English waiver.";
+                    }
+                } else if (selectedEntryRequirement === 'English Language Test requirements for undergraduate courses' || selectedEntryRequirement === 'English Language Test requirements for postgraduate courses') {
+                    if ((selectedOption === 'TOEFL' && marks >= 80) || (selectedOption === 'IELTS' && marks >= 6.5) || (selectedOption === 'PTE' && marks >= 58)) {
+                        botResponse = "You meet the English language requirements for admission.";
+                    } else {
+                        botResponse = "Unfortunately, you do not meet the minimum criteria for the selected English test.";
+                    }
                 }
                 addMessage(botResponse, 'bot');
 
-                // Update question list based on previously selected course type
                 if (selectedCourseType === 'ug') {
                     updateQuestionList(ugEntryRequirementOptions);
                 } else if (selectedCourseType === 'pg') {
@@ -394,7 +461,12 @@
             }, 500);
         }
 
-        // Clear all messages from the chat
+        function loadInitialQuestions() {
+            updateQuestionList(preloadedQA);
+        }
+
+        loadInitialQuestions();
+
         function clearMessages() {
             chatBody.innerHTML = '';
             addMessage("Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.", 'bot');
@@ -404,13 +476,11 @@
             selectedBoardOrUniversity = '';
             hideInputContainer();
 
-            // Check if the question list is open and hide it
             if (questionList.style.display === 'block') {
                 questionList.style.display = 'none';
             }
         }
 
-        // Load the initial questions into the question list
         function loadInitialQuestions() {
             questionList.innerHTML = '';
             for (let question in preloadedQA) {
@@ -421,11 +491,10 @@
             }
         }
 
-        // Initialize the chat with a welcome message and load initial questions
         window.onload = function () {
             addMessage("Hello! How can I assist you today?<br>Please choose your query from the FAQ menu.", 'bot');
             loadInitialQuestions();
-            hideInputContainer(); // Ensure the input container is hidden on load
+            hideInputContainer();
         };
     </script>
 </body>
