@@ -95,6 +95,14 @@
             word-wrap: break-word;
         }
 
+        .result-row {
+            transition: background-color 1s;
+        }
+
+        .hovered {
+             background-color: #F5F5DC !important;
+        }
+
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -4762,6 +4770,13 @@
                     // Reset height to natural height for non-overflowing rows
                     rowItems.css('height', 'auto');
                 }
+
+                // Add hover event listeners for the current row
+                rowItems.on('mouseenter', function() {
+                    rowItems.addClass('hovered');
+                }).on('mouseleave', function() {
+                    rowItems.removeClass('hovered');
+                });
             }
         }
 
