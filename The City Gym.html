@@ -151,8 +151,7 @@
             text-align: center;
             padding: 35px;
             margin: 20px 0;
-            z-index: 1;
-            height: 391px;
+            height: 400px;
             display: flex;
             justify-content: space-around;
         }
@@ -165,6 +164,7 @@
             position: absolute;
             top: 0;
             left: 0;
+            height: calc(100% - 20px);
             width: 100%;
             border: 4px solid #6B8E23;
             padding: 5px;
@@ -197,9 +197,7 @@
 
         #alumniquotes p {
             position: absolute;
-            padding: 30px;
-            top: 17%;
-            left: 0;
+            top: 25%;
             opacity: 0;
             transition: opacity 1s ease;
         }
@@ -208,12 +206,7 @@
             opacity: 1;
         }
 
-        .name {
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .age {
+        .name, .age {
             font-weight: bold;
             font-size: 20px;
         }
@@ -222,7 +215,6 @@
             position: relative;
             background: none;
             border: none;
-            z-index: 2;
             margin: -40px;
             cursor: pointer;
             
