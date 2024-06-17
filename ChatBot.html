@@ -83,6 +83,44 @@
             display: none;
         }
 
+        .avatar {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .typing-animation {
+            margin-top: 8px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #bbb;
+            border-radius: 50%;
+            margin-right: 4px;
+            animation: dot-animation 1.5s infinite ease-in-out;
+        }
+
+        @keyframes dot-animation {
+
+            0%,
+            60%,
+            100% {
+                opacity: 0.3;
+            }
+
+            30% {
+                opacity: 1;
+            }
+        }
+
         .menu-icon {
             display: flex;
             justify-content: center;
@@ -302,13 +340,41 @@
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
+        function showTypingAnimation() {
+            const typingElement = document.createElement('div');
+            typingElement.classList.add('message', 'bot', 'typing');
+
+            const avatar = document.createElement('img');
+            avatar.src = "https://www.crizac.com/catalog/view/new_design/img/favicon_crizac.png";
+            avatar.classList.add('avatar');
+
+            const contentContainer = document.createElement('div');
+            contentContainer.classList.add('content-container');
+
+            typingElement.appendChild(avatar);
+            typingElement.appendChild(contentContainer);
+
+            const typingAnimation = document.createElement('div');
+            typingAnimation.classList.add('typing-animation');
+            typingAnimation.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+
+            contentContainer.appendChild(typingAnimation);
+
+            chatBody.appendChild(typingElement);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            return typingElement;
+        }
+
         function toggleQuestionList() {
             questionList.style.display = questionList.style.display === 'none' ? 'block' : 'none';
         }
 
         function selectQuestion(question) {
             addMessage(question, 'user');
+            const typingElement = showTypingAnimation();
             setTimeout(() => {
+                chatBody.removeChild(typingElement);
                 const botResponse = preloadedQA[question] || "I'm sorry, I don't understand that.";
                 addMessage(botResponse, 'bot');
                 if (question === "I have queries regarding undergraduate entry requirements") {
@@ -318,7 +384,7 @@
                     selectedCourseType = 'pg';
                     updateQuestionList(pgEntryRequirementOptions);
                 }
-            }, 500);
+            }, 2000);
             toggleQuestionList();
         }
 
@@ -335,7 +401,9 @@
         function selectEntryRequirement(option) {
             selectedEntryRequirement = option;
             addMessage(option, 'user');
+            const typingElement = showTypingAnimation();
             setTimeout(() => {
+                chatBody.removeChild(typingElement);
                 let botResponse;
                 if (option === 'Academic requirements for undergraduate courses' || option === 'Academic requirements for postgraduate courses') {
                     updateOptionList(option === 'Academic requirements for undergraduate courses' ? ugBoards : pgUniversities);
@@ -358,7 +426,7 @@
                     hideInputContainer();
                 }
                 addMessage(botResponse, 'bot');
-            }, 500);
+            }, 2000);
             toggleQuestionList();
         }
 
@@ -388,7 +456,9 @@
         function selectBoardOrUniversityOrTest(option) {
             selectedOption = option;
             addMessage(option, 'user');
+            const typingElement = showTypingAnimation();
             setTimeout(() => {
+                chatBody.removeChild(typingElement);
                 let botResponse;
                 if (selectedEntryRequirement === 'Academic requirements for undergraduate courses' || selectedEntryRequirement === 'Academic requirements for postgraduate courses') {
                     botResponse = `How many percentile marks have you scored in your ${selectedCourseType === 'ug' ? 'higher secondary' : 'undergraduate'} exam? Please enter below.`;
@@ -415,7 +485,7 @@
                     }
                 }
                 addMessage(botResponse, 'bot');
-            }, 500);
+            }, 2000);
             questionList.style.display = 'none';
         }
 
@@ -430,9 +500,11 @@
         function submitMarks() {
             const marks = parseInt(marksInput.value, 10);
             addMessage(`I have scored ${marks}`, 'user');
+            const typingElement = showTypingAnimation();
             hideInputContainer();
             marksInput.value = '0';
             setTimeout(() => {
+                chatBody.removeChild(typingElement);
                 let botResponse;
                 if (selectedEntryRequirement === 'Academic requirements for undergraduate courses') {
                     if (selectedOption === 'CBSE' && marks >= 90) {
@@ -472,7 +544,7 @@
                 } else if (selectedCourseType === 'pg') {
                     updateQuestionList(pgEntryRequirementOptions);
                 }
-            }, 500);
+            }, 2000);
         }
 
         function loadInitialQuestions() {
