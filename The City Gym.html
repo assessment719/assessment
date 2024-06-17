@@ -467,6 +467,44 @@
             display: none;
         }
 
+        .avatar {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .typing-animation {
+            margin-top: 8px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #bbb;
+            border-radius: 50%;
+            margin-right: 4px;
+            animation: dot-animation 1.5s infinite ease-in-out;
+        }
+
+        @keyframes dot-animation {
+
+            0%,
+            60%,
+            100% {
+                opacity: 0.3;
+            }
+
+            30% {
+                opacity: 1;
+            }
+        }
+
         .menu-icon {
             display: flex;
             justify-content: center;
@@ -1060,6 +1098,32 @@
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
+        function showTypingAnimation() {
+            const typingElement = document.createElement('div');
+            typingElement.classList.add('message', 'bot', 'typing');
+
+            const avatar = document.createElement('img');
+            avatar.src = "https://i.postimg.cc/tC20WBJw/The-City-Gym-Logo.jpg";
+            avatar.classList.add('avatar');
+
+            const contentContainer = document.createElement('div');
+            contentContainer.classList.add('content-container');
+
+            typingElement.appendChild(avatar);
+            typingElement.appendChild(contentContainer);
+
+            const typingAnimation = document.createElement('div');
+            typingAnimation.classList.add('typing-animation');
+            typingAnimation.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+
+            contentContainer.appendChild(typingAnimation);
+
+            chatBody.appendChild(typingElement);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            return typingElement;
+        }
+
         function toggleQuestionList() {
             questionList.style.display = questionList.style.display === 'none' ? 'block' : 'none';
             questionList.scrollTop = 0;
@@ -1067,13 +1131,15 @@
 
         function selectQuestion(question) {
             addMessage(question, 'user');
+            const typingElement = showTypingAnimation();
             setTimeout(() => {
+                chatBody.removeChild(typingElement);
                 const botResponse = preloadedQA[question] || "I'm sorry, I don't understand that.";
                 addMessage(botResponse, 'bot');
                 if (question === "I want to connect with a human assistant") {
                     askName();
                 }
-            }, 500);
+            }, 2000);
             toggleQuestionList();
         }
 
@@ -1083,13 +1149,17 @@
 
         function submitName() {
             const name = nameInput.value;
-            addMessage(`My name is: ${name}`, 'user'); // Changed appendMessage to addMessage
+            addMessage(`My name is: ${name}`, 'user');
+            const typingElement = showTypingAnimation();
             nameInputContainer.style.display = 'none';
-            addMessage("Thank you for connecting, I am connecting you with Vishal Singh Chauhan (The owner of this gym) in 2 Seconds.", 'bot'); // Added the 'bot' sender parameter
+            setTimeout(() => {
+                chatBody.removeChild(typingElement);
+                addMessage("Thank you for connecting, I am connecting you with Vishal Singh Chauhan (The owner of this gym) in 2 Seconds.", 'bot');
+            }, 2000);
             setTimeout(() => {
                 const whatsappUrl = `https://api.whatsapp.com/send?phone=918084911306&text=Hello, my name is ${encodeURIComponent(name)}, and I have some queries regarding your gym.`;
                 window.open(whatsappUrl, '_blank');
-            }, 2000);
+            }, 4000);
             loadInitialQuestions();
             nameInput.value = '';
         }
