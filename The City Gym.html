@@ -1139,7 +1139,7 @@
                 if (question === "I want to connect with a human assistant") {
                     askName();
                 }
-            }, 2000);
+            }, 3000);
             toggleQuestionList();
         }
 
@@ -1155,11 +1155,11 @@
             setTimeout(() => {
                 chatBody.removeChild(typingElement);
                 addMessage("Thank you for connecting, I am connecting you with Vishal Singh Chauhan (The owner of this gym) in 2 Seconds.", 'bot');
-            }, 2000);
+            }, 3000);
             setTimeout(() => {
                 const whatsappUrl = `https://api.whatsapp.com/send?phone=918084911306&text=Hello, my name is ${encodeURIComponent(name)}, and I have some queries regarding your gym.`;
                 window.open(whatsappUrl, '_blank');
-            }, 4000);
+            }, 5000);
             loadInitialQuestions();
             nameInput.value = '';
         }
