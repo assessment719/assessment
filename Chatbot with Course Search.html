@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The City Gym with Marks Input</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Georgia, serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            font-family: Georgia, serif;
+        }
+
+        header {
+            background: #6B8E23;
+            color: black;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: larger;
+        }
+
+        header img {
+            border-radius: 50%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 11px;
+        }
+
+        nav ul li a {
+            color: black;
+            font-weight: bold;
+            font-size: 17px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+            text-shadow: 0 0 10px white;
+        }
+
+        section {
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        #home {
+            position: relative;
+            color: white;
+            text-align: center;
+            text-shadow: 3px 2px black;
+            font-family: "Georgia", Times, serif;
+            font-size: 40px;
+            padding: 100px 20px;
+            overflow: hidden;
+        }
+
+        #home img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+
+        #home img.active {
+            opacity: 1;
+        }
+
+        .home-text {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .plans {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .plan {
+            margin: 0 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #8FBC8F;
+            color: white;
+            border: solid;
+            border-color: black;
+            border-radius: 5px;
+            width: 300px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 1s ease, background-color 1s ease, color 1s ease;
+        }
+
+        .plan:hover {
+            background-color: #6B8E23;
+            transform: scale(1.1);
+        }
+
+        .plan.active {
+            color: black;
+            background-color: #66CDAA;
+        }
+
+        .plandetails {
+            background: #ecf8ec;
+            padding: 35px;
+            height: 265px;
+            border: 4px solid black;
+            border-radius: 5px;
+        }
+
+        .plandetails b {
+            font-size: larger;
+        }
+
+        .alumnistories {
+            background: #ecf8ec;
+            text-align: center;
+            padding: 35px;
+            margin: 20px 0;
+            height: 400px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #alumnipictures {
+            position: relative;
+        }
+
+        #alumnipictures img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: calc(100% - 19px);
+            width: 100%;
+            border: 4px solid #6B8E23;
+            padding: 5px;
+            box-shadow: 0 0 20px black;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #alumnipictures img.active {
+            opacity: 1;
+        }
+
+        #quotationimage1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120px;
+        }
+
+        #quotationimage2 {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 120px;
+        }
+
+        #alumniquotes {
+            position: relative;
+        }
+
+        #alumniquotes p {
+            position: absolute;
+            top: 25%;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #alumniquotes p.active {
+            opacity: 1;
+        }
+
+        .name,
+        .age {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .alumni-button {
+            position: relative;
+            background: none;
+            border: none;
+            margin: -40px;
+            cursor: pointer;
+
+        }
+
+        .prev {
+            left: -15px;
+        }
+
+        .next {
+            right: -15px;
+        }
+
+        .contactdetails {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            left: 0%;
+        }
+
+        form label {
+            margin-top: 10px;
+        }
+
+        form input,
+        form textarea {
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        form button {
+            margin-top: 20px;
+            padding: 10px;
+            font-weight: bold;
+            font-size: larger;
+            background: #8FBC8F;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #6B8E23;
+        }
+
+        #followUs {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #followUs h2 {
+            margin-bottom: 10px;
+        }
+
+        #followUs .social-icons {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #followUs .social-icons a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            margin: 5px 10px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .SocialMediaID {
+            margin-left: 5px;
+        }
+
+        #contact,
+        #address,
+        #followUs,
+        #alumnipictures,
+        #alumniquotes {
+            flex: 1;
+            box-sizing: border-box;
+            padding: 20px;
+            margin: 0 10px;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        footer {
+            background-color: #8FBC8F;
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #8FBC8F;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px black;
+            z-index: 1000;
+        }
+
+        #Image1,
+        #Image2 {
+            transition: opacity 0.5s ease;
+        }
+
+        #Image1 {
+            opacity: 1;
+        }
+
+        #Image2 {
+            opacity: 0;
+        }
+
+        .welcome-chat-closer {
+            position: fixed;
+            bottom: 165px;
+            right: 275px;
+            border-radius: 50%;
+            display: block;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .back-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #8FBC8F;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px black;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .welcome-chat {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 250px;
+            height: 60px;
+            text-align: center;
+            background-color: white;
+            border: 2px solid #8FBC8F;
+            font-family: Georgia, serif;
+            border-radius: 5px;
+            box-shadow: 0 0 10px black;
+            display: block;
+            z-index: 999;
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: white;
+            border: 3px solid #8FBC8F;
+            border-radius: 5px;
+            box-shadow: 0 0 10px black;
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+        }
+
+        .chat-header {
+            background-color: #8FBC8F;
+            color: white;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message .content {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 70%;
+        }
+
+        .message.bot .content {
+            background: #f1f1f1;
+        }
+
+        .message.user .content {
+            background: #6B8E23;
+            color: #fff;
+        }
+
+        .message .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .message.user .avatar {
+            display: none;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .typing-animation {
+            margin-top: 8px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #bbb;
+            border-radius: 50%;
+            margin-right: 4px;
+            animation: dot-animation 1.5s infinite ease-in-out;
+        }
+
+        @keyframes dot-animation {
+
+            0%,
+            60%,
+            100% {
+                opacity: 0.3;
+            }
+
+            30% {
+                opacity: 1;
+            }
+        }
+
+        .menu-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            background: #8FBC8F;
+            color: #fff;
+            position: relative;
+        }
+
+        .question-list {
+            display: none;
+            position: absolute;
+            bottom: 84px;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-top: 2px solid #8FBC8F;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .question-list div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .question-list div:hover {
+            background: #8FBC8F;
+            color: #fff;
+        }
+
+        .chat-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background: #8FBC8F;
+            color: #fff;
+            border-top: 2px solid #ddd;
+        }
+
+        .clear-button {
+            padding: 5px 10px;
+            background: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .clear-button:hover {
+            background: #ff1a1a;
+        }
+
+        .input-container {
+            display: none;
+            position: absolute;
+            bottom: 44px;
+            left: 0;
+            height: 21px;
+            width: calc(100% - 20px);
+            padding: 10px;
+            background: #fff;
+            border-top: 2px solid #8FBC8F;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-container label {
+            margin-right: 10px;
+        }
+
+        .input-container input {
+            width: 100px;
+            margin-right: 10px;
+            border: 2px solid #8FBC8F;
+        }
+
+        .input-container button {
+            font-weight: bold;
+            color: white;
+            background-color: #8FBC8F;
+        }
+
+        .input-container button:hover {
+            background-color: #6B8E23;
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: 40px;
+            padding-left: 16px;
+            padding-right: 16px;
+            font-size: 16px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 40px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px;
+            top: 0px;
+            right: 10px;
+        }
+
+        .select2-container {
+            position: relative;
+            z-index: 1000;
+            width: 100% !important;
+        }
+
+        #selectOptions {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <img src="https://i.postimg.cc/tC20WBJw/The-City-Gym-Logo.jpg" alt="The City Gym Logo" width="80px">
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#membership">Membership Plans</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#successfullstories">Successfull Stories</a></li>
+                <li><a href="#contact">Connect With Us</a></li>
+                <li><a href="#address">Address</a></li>
+                <li><a href="#followUs">Follow Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <hr>
+
+    <section id="home">
+        <img src="https://i.postimg.cc/Qt5SmdbV/HomePic1.jpg" alt="Gym Image 1">
+        <img src="https://i.postimg.cc/DwwTMtR7/HomePic2.jpg" alt="Gym Image 2">
+        <img src="https://i.postimg.cc/MGc8W1W4/HomePic3.jpg" alt="Gym Image 3">
+        <img src="https://i.postimg.cc/k4K3S9Rv/HomePic4.jpg" alt="Gym Image 4">
+        <img src="https://i.postimg.cc/8cm2yHHF/HomePic5.jpg" alt="Gym Image 5">
+        <div class="home-text">
+            <h1>Welcome to The City Gym</h1>
+            <p>Your journey to fitness starts here</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="about">
+        <h2>About Us</h2>
+        <p>Welcome to The City Gym, where fitness meets passion. At The City Gym, we believe in empowering individuals
+            to lead healthier, happier lives through personalized fitness solutions, expert guidance, and a supportive
+            community environment.<br><br>Our journey began with a simple yet powerful vision: to create a space where
+            people from all walks of life can come together to pursue their fitness goals, regardless of their age,
+            background, or fitness level. What started as a small fitness center has now evolved into a thriving
+            community hub dedicated to transforming lives through the power of fitness.<br><br>What sets us apart is our
+            unwavering commitment to excellence in everything we do. From our state-of-the-art facilities to our team of
+            experienced trainers and instructors, we strive to provide our members with the tools, support, and
+            inspiration they need to achieve their fitness aspirations.<br><br>But more than just a gym, The City Gym is
+            a place where friendships are forged, goals are conquered, and dreams are realized. Whether you're a
+            seasoned athlete or just starting your fitness journey, you'll find a home here at The City Gym.<br><br>Join
+            us and experience the difference at The City Gym. Together, we'll redefine what it means to be fit, healthy,
+            and unstoppable. We provide many facilities,
+            including:</p>
+        <ul>
+            <li>Personal training</li>
+            <li>Bodybuilding and men's physique competition preparation</li>
+            <li>Diabetic and cholesterol control programs</li>
+        </ul>
+        <p>Our mission is to promote health and wellness.</p>
+    </section>
+
+    <section id="membership">
+        <h2 style="text-align: center;">Membership Plans</h2>
+        <div class="plans">
+            <button class="plan" id="plan1Button">Basic Plan</button>
+            <button class="plan" id="plan2Button">Premium Plan</button>
+            <button class="plan" id="plan3Button">VIP Plan</button>
+        </div>
+        <div class="plandetails" id="plandetails1" style="display: block;">
+            <b>Basic Plan:</b>
+            <br><br>
+            Our Basic Plan offers fundamental access to our gym facilities. With this plan, you'll have the opportunity
+            to utilize state-of-the-art equipment and workout spaces designed to help you reach your fitness objectives.
+            You're a beginner or a seasoned gym-goer, this plan provides a solid foundation for your workouts.
+            <br><br>
+            <b>Offerings:</b>
+            <br><br>
+            <ul>
+                <li>Access to gym facilities: Utilize our range of cardio machines, weightlifting equipment, and
+                    functional training areas to customize your workout routines.</li>
+                <li>Professional guidance: Benefit from basic support and guidance from our fitness staff to help you
+                    get started on your fitness journey.</li>
+            </ul>
+            <br>
+            <b>Price:</b> ₹800/month
+        </div>
+        <div class="plandetails" id="plandetails2" style="display: none;">
+            <b>Premium Plan:</b>
+            <br><br>
+            Upgrade your fitness experience with our Premium Plan, which includes all the benefits of the Basic Plan
+            plus access to a variety of classes. Whether you're interested in group fitness, yoga, or specialized
+            training sessions, this plan offers a diverse range of classes to suit your preferences and fitness goals.
+            <br><br>
+            <b>Offerings:</b>
+            <br><br>
+            <ul>
+                <li>Access to gym facilities: Enjoy all the amenities available with the Basic Plan, including access to
+                    our cutting-edge equipment and facilities.</li>
+                <li>Classes: Participate in a selection of fitness classes led by experienced instructors, designed to
+                    challenge and inspire you while providing a fun and supportive environment.</li>
+            </ul>
+            <br>
+            <b>Price:</b> ₹1000/month
+        </div>
+        <div class="plandetails" id="plandetails3" style="display: none;">
+            <b>VIP Plan:</b>
+            <br><br>
+            For the ultimate fitness experience, our VIP Plan offers all-inclusive access to our gym and its premium
+            offerings. With this plan, you'll have access to everything our facility has to offer, ensuring that you
+            have the resources and support you need to maximize your fitness potential.
+            <br><br>
+            <b>Offerings:</b>
+            <br><br>
+            <ul>
+                <li>Access to gym facilities: Experience unrestricted access to our gym facilities, including all
+                    equipment, workout areas, and amenities.</li>
+                <li>Classes: Enjoy unlimited access to all fitness classes offered at our gym, allowing you to diversify
+                    your workout routine and explore new fitness modalities.</li>
+                <li>Personalized support: Receive personalized attention and support from our expert trainers, who will
+                    work with you to develop customized workout plans and provide ongoing guidance and motivation.</li>
+            </ul>
+            <br>
+            <b>Price:</b> ₹1500/month
+        </div>
+    </section>
+
+    <section id="services">
+        <h2>Services</h2>
+        <p>At The City Gym, we offer a comprehensive range of fitness services designed to meet the diverse needs and
+            goals of our members. Our goal is to provide you with everything you need to succeed on your fitness
+            journey, all under one roof.</p>
+        <ol>
+            <li><b>Personal Training:</b> Our team of certified personal trainers is here to provide you with
+                personalized guidance, support, and motivation every step of the way. Whether you're looking to lose
+                weight, build muscle, improve your athletic performance, or just lead a healthier lifestyle, our
+                trainers will create a customized workout plan tailored to your unique goals and abilities.</li>
+            <li><b>Group Fitness Classes:</b> From high-intensity interval training (HIIT) to yoga, Pilates, cycling,
+                and more, our group fitness classes offer something for everyone. Led by experienced instructors in a
+                fun and energizing atmosphere, our classes are designed to challenge your body and inspire your spirit,
+                regardless of your fitness level.</li>
+            <li><b>Nutritional Counseling:</b> We believe that nutrition is the foundation of a healthy lifestyle.
+                That's why we offer personalized nutritional counseling services to help you make informed choices about
+                your diet and achieve optimal results. Whether you're looking to lose weight, gain muscle, or simply
+                improve your overall health, our nutrition experts will work with you to develop a sustainable eating
+                plan that fits your lifestyle and preferences.</li>
+            <li><b>Functional Training:</b> Our functional training area is equipped with a variety of functional
+                fitness equipment, including kettlebells, battle ropes, TRX suspension trainers, and more. Whether
+                you're rehabilitating from an injury, improving your athletic performance, or just looking to move
+                better and feel stronger in your everyday life, our functional training programs will help you build
+                functional strength, mobility, and stability.</li>
+            <li><b>Specialized Programs:</b> From boot camps and weight loss challenges to sports-specific training and
+                corporate wellness programs, we offer a variety of specialized fitness programs to meet the unique needs
+                and interests of our members. Whatever your goals may be, we'll help you find the perfect program to
+                achieve them.</li>
+        </ol>
+        <p>At The City Gym, we're committed to helping you unlock your full potential and live your best life. Come see
+            what sets us apart and join the The City Gym family today!</p>
+    </section>
+
+    <h2 id="successfullstories" style="text-align: center;">Successfull Stories</h2>
+    <div class="alumnistories">
+        <button class="alumni-button prev"><img src="https://i.postimg.cc/KjxVgT2m/Previous-Button.png"
+                alt="Previous Button" width="70px"></button>
+
+        <section id="alumnipictures">
+            <img src="https://i.postimg.cc/YChPgkJL/Person1.jpg" alt="Alumni Image 1">
+            <img src="https://i.postimg.cc/7LzQs9Px/Person2.jpg" alt="Alumni Image 2">
+            <img src="https://i.postimg.cc/fLjqZb0p/Person3.jpg" alt="Alumni Image 3">
+            <img src="https://i.postimg.cc/GpvqJpzt/Person4.jpg" alt="Alumni Image 4">
+            <img src="https://i.postimg.cc/BQtp7pNd/Person5.jpg" alt="Alumni Image 5">
+        </section>
+
+        <section id="alumniquotes">
+            <img id="quotationimage1" src="https://i.postimg.cc/rsTm0fsz/Quotes-Up.png" alt="Quotation 1">
+            <p><span class="name">Name: Synthia Gomez</span><br><br><span class="age">Age: 23
+                    Years</span><br><br>"Breaking stereotypes, I embraced weightlifting and
+                transformed my body. Gaining strength and muscle, I in my first powerlifting meet. My success in a
+                male-dominated field motivates me to encourage
+                more women to pursue their fitness passions."</p>
+            <p><span class="name">Name: Mason Davis</span><br><br><span class="age">Age: 25 Years</span><br><br>"Post a
+                serious injury, my recovery seemed impossible. With relentless effort and support from my gym
+                family, I regained strength and surpassed my previous fitness levels. This journey taught me resilience,
+                and I now empower others facing similar challenges."
+            <p><span class="name">Name: Liam Anderson</span><br><br><span class="age">Age: 30
+                    Years</span><br><br>"Transforming from a skinny teenager to a confident bodybuilder, I dedicated
+                myself to intense training
+                and a strict diet. Overcoming self-doubt and pushing my limits daily, I built a physique I’m proud of,
+                earning respect and inspiring others in my fitness community."</p>
+            <p><span class="name">Name: Olivia Roberts</span><br><br><span class="age">Age: 27 Years</span><br><br>"From
+                struggling with anxiety to becoming a fitness coach, the gym was my sanctuary. Strength training
+                and mindfulness practices improved my mental and physical health. Now, I help others find their inner
+                strength and achieve balance through fitness."</p>
+            <p><span class="name">Name: Benjamin Parker</span><br><br><span class="age">Age: 28
+                    Years</span><br><br>"Starting as a novice lifter, I set clear goals and followed a structured
+                program. My perseverance paid
+                off, and I became a certified personal trainer. Helping clients achieve their fitness dreams has been
+                the most rewarding part of my transformation."</p>
+            <img id="quotationimage2" src="https://i.postimg.cc/x8PdKLN5/Quotes-Down.png" alt="Quotation 2">
+        </section>
+
+        <div class="clearfix"></div>
+
+        <button class="alumni-button next"><img src="https://i.postimg.cc/QxNw8cmb/Next-Button.png" alt="Next Button"
+                width="70px"></button>
+    </div>
+
+    <div class="contactdetails">
+        <section id="contact">
+            <h2><u>Connect With Us</u></h2>
+            <form id="contactForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="phonenumber">Phone Number:</label>
+                <input type="tel" id="phonenumber" name="phonenumber" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <section id="address">
+            <h2><u>Address</u></h2>
+            <p>The City Gym</p>
+            <p>Maheshmara, Near SBI Bank Baijnathpur, Deoghar, Jharkhand, India</p>
+        </section>
+
+        <section id="followUs">
+            <h2><u>Follow Us</u></h2>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/thecity_gym?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                    target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1384/1384063.png" alt="Instagram Logo"
+                        width="30px">
+                    <span class="SocialMediaID">thecity_gym</span>
+                </a>
+                <a href="https://www.facebook.com/thecitygym20" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Facebook Logo" width="30px">
+                    <span class="SocialMediaID">The City Gym</span>
+                </a>
+            </div>
+        </section>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <footer>
+        <hr>
+        <p>&copy; 2024 The City Gym. All rights reserved.</p>
+    </footer>
+
+    <div class="welcome-chat" id="welcome-chat">
+        <div class="chat-body">
+            Do you need assistance?
+            <br>
+            I am here to help you.
+        </div>
+    </div>
+
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">
+            FAQ Chat Support
+        </div>
+        <div class="chat-body" id="chatBody">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="question-list" id="questionList">
+            <!-- Questions will appear here -->
+        </div>
+        <div class="input-container" id="marksinputContainer">
+            <label for="marksInput">Enter Marks:</label>
+            <input type="number" id="marksInput" min="0" max="100" value="0">
+            <button type="button" onclick="submitMarks()">Submit</button>
+        </div>
+        <div class="input-container" id="courseinputContainer">
+            <label for="courseInput">Enter Course Name Term:</label>
+            <input type="text" id="courseInput">
+            <button type="button" onclick="submitCourse()">Submit</button>
+        </div>
+        <div class="menu-icon" onclick="toggleQuestionList()">☰ Frequently Asked Questions ☰</div>
+        <div class="chat-footer">
+            <button class="clear-button" onclick="clearMessages()">Clear Messages</button>
+        </div>
+    </div>
+
+    <div class="welcome-chat-closer" id="welcome-chat-closerbutton" onclick="closewelcomeChat()">
+        <img src="https://i.postimg.cc/qvvNxDL3/Close.png" alt="Welcome Chat Close" width="15px"
+            style="display: block;">
+    </div>
+
+    <div class="chat-widget" onclick="toggleChat()">
+        <img id="Image1" src="https://i.postimg.cc/P5XwF5tN/Chat.png" alt="Chat Open" width="40px"
+            style="display: block;">
+        <img id="Image2" src="https://i.postimg.cc/qvvNxDL3/Close.png" alt="Chat Close" width="35px"
+            style="display: none;">
+    </div>
+
+    <a href="#header">
+        <div class="back-top" id="back-to-top">
+            <img src="https://i.postimg.cc/L8QnCkC0/BackTop.png" alt="Back To Top" width="40px" style="display: block;">
+        </div>
+    </a>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const phoneNumber = document.getElementById('phonenumber').value;
+            const message = document.getElementById('message').value;
+
+            const whatsappMessage = `Hello, my name is ${encodeURIComponent(name)}, my phone number is ${encodeURIComponent(phoneNumber)}, and my message is: ${encodeURIComponent(message)}`;
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=918084911306&text=${whatsappMessage}`;
+
+            alert('Thank you for contacting us! You will be redirected to WhatsApp shortly.');
+
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+            }, 3000);
+
+            this.reset();
+        });
+
+        const images = document.querySelectorAll('#home img');
+        let currentImageIndex = 0;
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        function updateImage() {
+            currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
+            showImage(currentImageIndex);
+        }
+
+        showImage(currentImageIndex);
+
+        setInterval(updateImage, 10000);
+
+        const plan1Button = document.getElementById('plan1Button');
+        const plan2Button = document.getElementById('plan2Button');
+        const plan3Button = document.getElementById('plan3Button');
+        const plandetails1 = document.getElementById('plandetails1');
+        const plandetails2 = document.getElementById('plandetails2');
+        const plandetails3 = document.getElementById('plandetails3');
+
+        plan1Button.addEventListener('click', function () {
+            plandetails1.style.display = 'block';
+            plandetails2.style.display = 'none';
+            plandetails3.style.display = 'none';
+            plan1Button.classList.add('active');
+            plan2Button.classList.remove('active');
+            plan3Button.classList.remove('active');
+        });
+
+        plan2Button.addEventListener('click', function () {
+            plandetails1.style.display = 'none';
+            plandetails2.style.display = 'block';
+            plandetails3.style.display = 'none';
+            plan1Button.classList.remove('active');
+            plan2Button.classList.add('active');
+            plan3Button.classList.remove('active');
+        });
+
+        plan3Button.addEventListener('click', function () {
+            plandetails1.style.display = 'none';
+            plandetails2.style.display = 'none';
+            plandetails3.style.display = 'block';
+            plan1Button.classList.remove('active');
+            plan2Button.classList.remove('active');
+            plan3Button.classList.add('active');
+        });
+
+        window.onload = function () {
+            plan1Button.classList.add('active');
+        };
+
+        const imagesw = document.querySelectorAll('#alumnipictures img');
+        const paragraphs = document.querySelectorAll('#alumniquotes p');
+
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+
+        let currentIndex = 0;
+
+        function showItem(index) {
+            imagesw.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+
+            paragraphs.forEach((p, i) => {
+                p.classList.toggle('active', i === index);
+            });
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : Math.max(imagesw.length, paragraphs.length) - 1;
+            showItem(currentIndex);
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex < Math.max(imagesw.length, paragraphs.length) - 1) ? currentIndex + 1 : 0;
+            showItem(currentIndex);
+        });
+
+        showItem(currentIndex);
+
+        function toggleChat() {
+            var welcomechat = document.getElementById('welcome-chat');
+            var welcomechatcloserbutton = document.getElementById('welcome-chat-closerbutton');
+            var chatContainer = document.getElementById('chat-container');
+            var image1 = document.getElementById('Image1');
+            var image2 = document.getElementById('Image2');
+
+            if (welcomechat.style.display === 'block' || chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+                welcomechat.style.display = 'none';
+                chatContainer.style.display = 'flex';
+                welcomechatcloserbutton.style.display = 'none';
+                image1.style.opacity = '0';
+                image2.style.display = 'block';
+                setTimeout(function () {
+                    image2.style.opacity = '1';
+                    image1.style.display = 'none';
+                }, 0);
+                relodeChatBox()
+            } else {
+                welcomechat.style.display = 'flex'
+                chatContainer.style.display = 'none';
+                welcomechatcloserbutton.style.display = 'block';
+                image2.style.opacity = '0';
+                image1.style.display = 'block';
+                setTimeout(function () {
+                    image1.style.opacity = '1';
+                    image2.style.display = 'none';
+                }, 0);
+            }
+        }
+
+        function closewelcomeChat() {
+            var welcomechat = document.getElementById('welcome-chat');
+            var welcomechatcloserbutton = document.getElementById('welcome-chat-closerbutton');
+
+            welcomechat.style.display = 'none';
+            welcomechatcloserbutton.style.display = 'none';
+        }
+
+        function relodeChatBox() {
+            chatBody.innerHTML = '';
+            questionList.style.display = 'none';
+            addMessage("Hello! How can I assist you today?<br>Please choose your query from the FAQ menu.", 'bot');
+            loadInitialQuestions();
+            hideMarksInputContainer();
+        }
+
+        const chatBody = document.getElementById('chatBody');
+        const questionList = document.getElementById('questionList');
+        const marksinputContainer = document.getElementById('marksinputContainer');
+        const marksInput = document.getElementById('marksInput');
+        const courseInputContainer = document.getElementById('courseinputContainer');
+        const courseInput = document.getElementById('courseInput');
+
+        const preloadedQA = {
+            "What is your name?": "I am a chatbot created to assist you.",
+            "How can you help me?": "I can answer your questions and provide information.",
+            "I have queries regarding undergraduate entry requirements": "What kind of undergraduate entry requirements are you concerned about? Choose your type of query from the menu.",
+            "I have queries regarding postgraduate entry requirements": "What kind of postgraduate entry requirements are you concerned about? Choose your type of query from the menu.",
+        };
+
+        const ugEntryRequirementOptions = {
+            "Academic requirements for undergraduate courses": "Please select your board.",
+            "English Waiver requirements for undergraduate courses": "Please select your board of education.",
+            "English Language Test requirements for undergraduate courses": "Please select your English test.",
+            "I am searching for a specific undergraduate course": "Are you looking for a course of any specific university? Choose your university from the menu otherwise select - None of the below.",
+            "I am searching for some universities which are available in a specific city": "Are you looking for which city's university names? Plaese select your desired city to study from the menu",
+            "Restart the chat": "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.",
+        };
+
+        const pgEntryRequirementOptions = {
+            "Academic requirements for postgraduate courses": "Please select your university.",
+            "English Waiver requirements for postgraduate courses": "Please select your board of education.",
+            "MOI Waiver requirements for postgraduate courses": "Please select your university of education.",
+            "English Language Test requirements for postgraduate courses": "Please select your English test.",
+            "I am searching for a specific postgraduate course": "Are you looking for a course of any specific university? Choose your university from the menu otherwise select - None of the below.",
+            "I am searching for some universities which are available in a specific city": "Are you looking for which city's university names? Plaese select your desired city to study from the menu",
+            "Restart the chat": "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.",
+        };
+
+        const ugBoards = {
+            "CBSE": "Central Board of Secondary Education",
+            "ICSE": "Indian Certificate of Secondary Education",
+            "State Board": "Various State Boards",
+        };
+
+        const pgUniversities = {
+            "Delhi University": "University of Delhi",
+            "Mumbai University": "University of Mumbai",
+            "Bangalore University": "Bangalore University",
+        };
+
+        const englishTests = {
+            "TOEFL": "TOEFL",
+            "IELTS": "IELTS",
+            "PTE": "PTE",
+        };
+
+        const universityNames = {
+            "None of the below": "None of the below",
+            "Coventry University": "Coventry University",
+            "Anglia Ruskin University": "Anglia Ruskin University",
+            "University of Greenwich": "University of Greenwich",
+        };
+
+        const intakeMonths = {
+            "None of the below": "None of the below",
+            "September/October 2024": "September/October 2024",
+            "November/December 2024": "November/December 2024",
+            "January/February 2025": "January/February 2025",
+        };
+
+        const cityLocation = {
+            "London": "London",
+            "Birmingham": "Birmingham",
+            "Manchester": "Manchester",
+            "Leicester": "Leicester",
+        };
+
+        let selectedCourseType = '';
+        let selectedEntryRequirement = '';
+        let selectedOption = '';
+        let selectedUniversity = '';
+        let selectedIntake = '';
+        let selectedCity = '';
+
+        function addMessage(content, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+
+            const avatar = document.createElement('img');
+            avatar.src = "https://www.crizac.com/catalog/view/new_design/img/favicon_crizac.png";
+            avatar.classList.add('avatar');
+
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('content');
+            messageContent.innerHTML = content;
+
+            if (sender === 'bot') {
+                messageElement.appendChild(avatar);
+            }
+
+            messageElement.appendChild(messageContent);
+            chatBody.appendChild(messageElement);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function showTypingAnimation() {
+            const typingElement = document.createElement('div');
+            typingElement.classList.add('message', 'bot', 'typing');
+
+            const avatar = document.createElement('img');
+            avatar.src = "https://www.crizac.com/catalog/view/new_design/img/favicon_crizac.png";
+            avatar.classList.add('avatar');
+
+            const contentContainer = document.createElement('div');
+            contentContainer.classList.add('content-container');
+
+            typingElement.appendChild(avatar);
+            typingElement.appendChild(contentContainer);
+
+            const typingAnimation = document.createElement('div');
+            typingAnimation.classList.add('typing-animation');
+            typingAnimation.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+
+            contentContainer.appendChild(typingAnimation);
+
+            chatBody.appendChild(typingElement);
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            return typingElement;
+        }
+
+        function toggleQuestionList() {
+            questionList.style.display = questionList.style.display === 'none' ? 'block' : 'none';
+            questionList.scrollTop = 0;
+        }
+
+        function selectQuestion(question) {
+            addMessage(question, 'user');
+            const typingElement = showTypingAnimation();
+            setTimeout(() => {
+                chatBody.removeChild(typingElement);
+                const botResponse = preloadedQA[question] || "I'm sorry, I don't understand that.";
+                addMessage(botResponse, 'bot');
+                if (question === "I have queries regarding undergraduate entry requirements") {
+                    selectedCourseType = 'ug';
+                    updateQuestionList(ugEntryRequirementOptions);
+                } else if (question === "I have queries regarding postgraduate entry requirements") {
+                    selectedCourseType = 'pg';
+                    updateQuestionList(pgEntryRequirementOptions);
+                }
+            }, 3000);
+            toggleQuestionList();
+        }
+
+        function updateQuestionList(questions) {
+            questionList.innerHTML = '';
+            for (let question in questions) {
+                const questionElement = document.createElement('div');
+                questionElement.textContent = question;
+                if (questions === intakeMonths) {
+                    questionElement.onclick = () => intakeMonthsHandler(question);
+                } else {
+                    questionElement.onclick = () => selectEntryRequirement(question);
+                }
+                questionList.appendChild(questionElement);
+            }
+        }
+
+        function selectEntryRequirement(option) {
+            selectedEntryRequirement = option;
+            addMessage(option, 'user');
+            const typingElement = showTypingAnimation();
+            setTimeout(() => {
+                chatBody.removeChild(typingElement);
+                let botResponse;
+                if (option === 'Academic requirements for undergraduate courses' || option === 'Academic requirements for postgraduate courses') {
+                    updateOptionList(option === 'Academic requirements for undergraduate courses' ? ugBoards : pgUniversities);
+                    botResponse = "Please select your " + (selectedCourseType === 'ug' ? "board" : "university") + " of education from the list.";
+                } else if (option === 'English Waiver requirements for undergraduate courses' || option === 'English Waiver requirements for postgraduate courses') {
+                    updateOptionList(ugBoards);
+                    botResponse = "Please select your board of education from the list.";
+                } else if (option === 'MOI Waiver requirements for postgraduate courses') {
+                    updateOptionList(pgUniversities);
+                    botResponse = "Please select your university of education from the list.";
+                } else if (option === 'English Language Test requirements for undergraduate courses' || option === 'English Language Test requirements for postgraduate courses') {
+                    updateOptionList(englishTests);
+                    botResponse = "Please select your English test from the list.";
+                } else if (option === 'I am searching for a specific undergraduate course' || option === 'I am searching for a specific postgraduate course') {
+                    updateOptionList(universityNames);
+                    botResponse = "Are you looking for a course of any specific university? Choose your university from the menu otherwise select - None of the below.";
+                } else if (option === 'I am searching for some universities which are available in a specific city') {
+                    updateOptionList(cityLocation);
+                    botResponse = "What is your desired city to study in UK? Plaese select your desired city to study from the menu";
+                } else if (option === 'Restart the chat') {
+                    botResponse = "Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.";
+                    loadInitialQuestions();
+                    hideMarksInputContainer();
+                } else {
+                    botResponse = selectedCourseType === 'ug' ? ugEntryRequirementOptions[option] : pgEntryRequirementOptions[option];
+                    hideMarksInputContainer();
+                }
+                addMessage(botResponse, 'bot');
+            }, 3000);
+            toggleQuestionList();
+        }
+
+        function updateOptionList(options) {
+            questionList.innerHTML = '<select class="js-example-basic-single" id="selectOptions"><option></option></select>';
+            for (let option in options) {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = options[option];
+                document.getElementById('selectOptions').appendChild(optionElement);
+            }
+            $('.js-example-basic-single').select2({
+                placeholder: "Select an option",
+                allowClear: true
+            });
+
+            $('#selectOptions').on('change', function () {
+                const selectedOption = $(this).val();
+                if (selectedOption) {
+                    selectBoardOrUniversityOrTest(selectedOption);
+                    $(this).val(null).trigger('change');
+                }
+            });
+            questionList.style.display = 'none';
+        }
+
+        function selectBoardOrUniversityOrTest(option) {
+            selectedOption = option;
+            addMessage(option, 'user');
+            const typingElement = showTypingAnimation();
+            setTimeout(() => {
+                chatBody.removeChild(typingElement);
+                let botResponse;
+                if (selectedEntryRequirement === 'Academic requirements for undergraduate courses' || selectedEntryRequirement === 'Academic requirements for postgraduate courses') {
+                    botResponse = `How many percentile marks have you scored in your ${selectedCourseType === 'ug' ? 'higher secondary' : 'undergraduate'} exam? Please enter below.`;
+                    showMarksInputContainer();
+                } else if (selectedEntryRequirement === 'English Waiver requirements for undergraduate courses' || selectedEntryRequirement === 'English Waiver requirements for postgraduate courses') {
+                    botResponse = `Please enter your english subject score in your higher secondary exam below to check if you qualify for an English waiver.`;
+                    showMarksInputContainer();
+                } else if (selectedEntryRequirement === 'English Language Test requirements for undergraduate courses' || selectedEntryRequirement === 'English Language Test requirements for postgraduate courses') {
+                    botResponse = `Please enter your score in the ${option} exam below to check if you meet the English language requirements.`;
+                    showMarksInputContainer();
+                } else if (selectedEntryRequirement === 'I am searching for a specific undergraduate course' || selectedEntryRequirement === 'I am searching for a specific postgraduate course') {
+                    selectedUniversity = option;
+                    botResponse = `Are you looking for a course of any specific intake? Choose your intake from the menu otherwise select - None of the below.`;
+                    updateQuestionList(intakeMonths);
+                } else if (selectedEntryRequirement === 'I am searching for some universities which are available in a specific city') {
+                    selectedCity = option;
+                    if (selectedOption === 'London') {
+                        botResponse = `The below metioned universities are available in ${encodeURIComponent(selectedCity)} <br>1.Coventry University`;
+                    } else if (selectedOption === 'Leicester') {
+                        botResponse = `The below metioned universities are available in ${encodeURIComponent(selectedCity)} <br>1.De Montfort University`;
+                    } else {
+                        botResponse = `Unfortunately, there are no universities situated in ${encodeURIComponent(selectedCity)}`;
+                    }
+
+                    if (selectedCourseType === 'ug') {
+                        updateQuestionList(ugEntryRequirementOptions);
+                    } else if (selectedCourseType === 'pg') {
+                        updateQuestionList(pgEntryRequirementOptions);
+                    }
+                } else if (selectedEntryRequirement === 'MOI Waiver requirements for postgraduate courses') {
+                    if (selectedOption === 'Delhi University') {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. University of Birmingham<br>2. University of Glasgow";
+                    } else if (selectedOption === 'Mumbai University') {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. University of Leeds<br>2. University of Manchester";
+                    } else {
+                        botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected university.";
+                    }
+
+                    if (selectedCourseType === 'ug') {
+                        updateQuestionList(ugEntryRequirementOptions);
+                    } else if (selectedCourseType === 'pg') {
+                        updateQuestionList(pgEntryRequirementOptions);
+                    }
+                }
+                addMessage(botResponse, 'bot');
+            }, 3000);
+            toggleQuestionList();
+        }
+
+        function showMarksInputContainer() {
+            marksinputContainer.style.display = 'flex';
+        }
+
+        function hideMarksInputContainer() {
+            marksinputContainer.style.display = 'none';
+        }
+
+        function intakeMonthsHandler(option) {
+            selectedIntake = option;
+            addMessage(option, 'user');
+            const typingElement = showTypingAnimation();
+            setTimeout(() => {
+                chatBody.removeChild(typingElement);
+                let botResponse = "Please submit course name term which is included in the course name. Let, you are looking for Bussiness Management BSc (Hons), then you can mention Business or Management";
+                addMessage(botResponse, 'bot');
+                showCourseInputContainer();
+            }, 3000);
+            toggleQuestionList();
+        }
+
+        function showCourseInputContainer() {
+            courseInputContainer.style.display = 'flex';
+        }
+
+        function hideCourseInputContainer() {
+            courseInputContainer.style.display = 'none';
+        }
+
+        function submitMarks() {
+            const marks = parseInt(marksInput.value, 10);
+            addMessage(`I have scored ${marks}`, 'user');
+            const typingElement = showTypingAnimation();
+            hideMarksInputContainer();
+            marksInput.value = '0';
+            setTimeout(() => {
+                chatBody.removeChild(typingElement);
+                let botResponse;
+                if (selectedEntryRequirement === 'Academic requirements for undergraduate courses') {
+                    if (selectedOption === 'CBSE' && marks >= 90) {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. Anglia Ruskin University<br>2. Coventry University";
+                    } else if (selectedOption === 'ICSE' && marks >= 85) {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. Birmingham City University<br>2. Bangor University";
+                    } else {
+                        botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected board.";
+                    }
+                } else if (selectedEntryRequirement === 'Academic requirements for postgraduate courses') {
+                    if (selectedOption === 'Delhi University' && marks >= 60) {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. University of Birmingham<br>2. University of Glasgow";
+                    } else if (selectedOption === 'Mumbai University' && marks >= 55) {
+                        botResponse = "You are eligible to get admission in the following universities:<br>1. University of Leeds<br>2. University of Manchester";
+                    } else {
+                        botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected university.";
+                    }
+                } else if (selectedEntryRequirement === 'English Waiver requirements for undergraduate courses' || selectedEntryRequirement === 'English Waiver requirements for postgraduate courses') {
+                    if (selectedOption === 'CBSE' && marks >= 70) {
+                        botResponse = "You qualify for an English waiver based on your academic performance.";
+                    } else if (selectedOption === 'ICSE' && marks >= 65) {
+                        botResponse = "You qualify for an English waiver based on your academic performance.";
+                    } else {
+                        botResponse = "Unfortunately, you do not qualify for an English waiver.";
+                    }
+                } else if (selectedEntryRequirement === 'English Language Test requirements for undergraduate courses' || selectedEntryRequirement === 'English Language Test requirements for postgraduate courses') {
+                    if ((selectedOption === 'TOEFL' && marks >= 80) || (selectedOption === 'IELTS' && marks >= 6.5) || (selectedOption === 'PTE' && marks >= 58)) {
+                        botResponse = "You meet the English language requirements for admission.";
+                    } else {
+                        botResponse = "Unfortunately, you do not meet the minimum criteria for the selected English test.";
+                    }
+                }
+                addMessage(botResponse, 'bot');
+
+                if (selectedCourseType === 'ug') {
+                    updateQuestionList(ugEntryRequirementOptions);
+                } else if (selectedCourseType === 'pg') {
+                    updateQuestionList(pgEntryRequirementOptions);
+                }
+            }, 3000);
+        }
+
+        function customEncodeURIComponent(str) {
+            return encodeURIComponent(str).replace(/%2F/g, '/');
+        }
+
+        function submitCourse() {
+            const course = courseInput.value.trim();
+            addMessage(`I want courses that include ${course} in them.`, 'user');
+            const typingElement = showTypingAnimation();
+            hideCourseInputContainer();
+            courseInput.value = '';
+
+            setTimeout(() => {
+                chatBody.removeChild(typingElement);
+                const botMessage = `Thank you for your querry. I will redirect you to the course page where you can find all the courses which have ${course} in it`;
+                addMessage(botMessage, 'bot');
+            }, 3000);
+
+            setTimeout(() => {
+                if (selectedEntryRequirement === 'I am searching for a specific undergraduate course' || selectedEntryRequirement === 'I am searching for a specific postgraduate course') {
+                    if (selectedOption === 'None of the below' && selectedIntake === 'None of the below') {
+                        const courseUrl = `https://www.crizacs.com/?route=product%2Fsearchaccount&language=en&store_id=1&customer_token=d88d3d814b20759d5758b2db5d&search=${encodeURIComponent(course)}&ctype1=${selectedCourseType === 'ug' ? 'Undergraduate' : 'Postgraduate'}`;
+                        window.open(courseUrl, '_blank');
+                    } else if (selectedOption !== 'None of the below' && selectedIntake === 'None of the below') {
+                        const courseUrl = `https://www.crizacs.com/?route=product%2Fsearchaccount&language=en&store_id=1&customer_token=819a90c54cc9c2ac0c5d69501a&search=${encodeURIComponent(course)}&ctype1=${selectedCourseType === 'ug' ? 'Undergraduate' : 'Postgraduate'}&utype3=${encodeURIComponent(selectedUniversity)}`;
+                        window.open(courseUrl, '_blank');
+                    } else if (selectedOption === 'None of the below' && selectedIntake !== 'None of the below') {
+                        const courseUrl = `https://www.crizacs.com/?route=product%2Fsearchaccount&language=en&store_id=1&customer_token=819a90c54cc9c2ac0c5d69501a&search=${encodeURIComponent(course)}&ctype1=${selectedCourseType === 'ug' ? 'Undergraduate' : 'Postgraduate'}&intake4=${customEncodeURIComponent(selectedIntake)}`;
+                        window.open(courseUrl, '_blank');
+                    } else {
+                        const courseUrl = `https://www.crizacs.com/?route=product%2Fsearchaccount&language=en&store_id=1&customer_token=d88d3d814b20759d5758b2db5d&search=${encodeURIComponent(course)}&ctype1=${selectedCourseType === 'ug' ? 'Undergraduate' : 'Postgraduate'}&intake4=${customEncodeURIComponent(selectedIntake)}&utype1=${encodeURIComponent(selectedUniversity)}`;
+                        window.open(courseUrl, '_blank');
+                    }
+                }
+
+                if (selectedCourseType === 'ug') {
+                    updateQuestionList(ugEntryRequirementOptions);
+                } else if (selectedCourseType === 'pg') {
+                    updateQuestionList(pgEntryRequirementOptions);
+                }
+            }, 6000);
+        }
+
+        function loadInitialQuestions() {
+            updateQuestionList(preloadedQA);
+        }
+
+        loadInitialQuestions();
+
+        function clearMessages() {
+            chatBody.innerHTML = '';
+            addMessage("Hello! How can I assist you again?<br>Please choose your query from the FAQ menu.", 'bot');
+            loadInitialQuestions();
+            selectedCourseType = '';
+            selectedEntryRequirement = '';
+            selectedBoardOrUniversity = '';
+            hideMarksInputContainer();
+
+            if (questionList.style.display === 'block') {
+                questionList.style.display = 'none';
+            }
+        }
+
+        function loadInitialQuestions() {
+            questionList.innerHTML = '';
+            for (let question in preloadedQA) {
+                const questionElement = document.createElement('div');
+                questionElement.textContent = question;
+                questionElement.onclick = () => selectQuestion(question);
+                questionList.appendChild(questionElement);
+            }
+        }
+
+        const backToTopButton = document.getElementById('back-to-top');
+        const headerSection = document.getElementById('header');
+
+        const toggleButtonVisibility = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    backToTopButton.style.visibility = 'hidden';
+                    backToTopButton.style.opacity = '0';
+                } else {
+                    backToTopButton.style.visibility = 'visible';
+                    setTimeout(() => {
+                        backToTopButton.style.opacity = '1';
+                    }, 0);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(toggleButtonVisibility, {
+            threshold: 0.1
+        });
+
+        observer.observe(headerSection);
+
+    </script>
+</body>
+
+</html>
