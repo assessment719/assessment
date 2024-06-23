@@ -477,12 +477,7 @@
                     } else {
                         botResponse = "Unfortunately, you do not meet the minimum eligibility criteria for the selected university.";
                     }
-
-                    if (selectedCourseType === 'ug') {
-                        updateQuestionList(ugEntryRequirementOptions);
-                    } else if (selectedCourseType === 'pg') {
-                        updateQuestionList(pgEntryRequirementOptions);
-                    }
+                    updateQuestionList(selectedCourseType === 'ug' ? ugEntryRequirementOptions : pgEntryRequirementOptions);
                 }
                 addMessage(botResponse, 'bot');
             }, 3000);
@@ -538,12 +533,7 @@
                     }
                 }
                 addMessage(botResponse, 'bot');
-
-                if (selectedCourseType === 'ug') {
-                    updateQuestionList(ugEntryRequirementOptions);
-                } else if (selectedCourseType === 'pg') {
-                    updateQuestionList(pgEntryRequirementOptions);
-                }
+                updateQuestionList(selectedCourseType === 'ug' ? ugEntryRequirementOptions : pgEntryRequirementOptions);
             }, 3000);
         }
 
