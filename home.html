@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Copperplate, Arial, sans-serif;
+            background-color: #DCD6F7;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30vh;
+            font-size: 55px;
+        }
+
+        .main {
+            position: relative;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 10vh;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        p {
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px;
+        }
+
+        button {
+            width: 25vw;
+            padding: 1.3rem;
+            background-color: rgb(109, 154, 180);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background: none;
+        }
+
+        button:hover {
+            background-color: rgb(89, 128, 150);
+            box-shadow: 0 0 15px black;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        Tic Tac Toe
+    </h1>
+    <div class="main">
+        <div class="content">
+            <p>Do You Have A Opponent?</p>
+            <a href="https://raw.githack.com/assessment719/Tic-Tac-Toe-Game/main/Tic%20Tac%20Toe%20Game/index.html"><button id="couple">Click Me & Play</button></a>
+        </div>
+        <div class="content">
+            <p>Are You Single?</p>
+            <a href="https://raw.githack.com/assessment719/Tic-Tac-Toe-Solo/Chat/Tic%20Tac%20Toe%20Game/index.html"><button id="solo">Click Me & Play</button></a>
+        </div>
+    </div>
+</body>
+
+</html>
