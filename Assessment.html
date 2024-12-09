@@ -590,7 +590,7 @@
 
         const updateEducationSystemOptions1 = () => {
             const selectedLevel = educationLevel1.value;
-            educationSystem1.innerHTML = ''; // Clearing previous options
+            educationSystem1.innerHTML = '';
             if (selectedLevel === 'Undergraduate') {
                 const options = ['Board of Intermediate Education, Andhra Pradesh', 'Government of Kerala Board of Higher Secondary Examinations'];
                 options.forEach(option => {
@@ -611,7 +611,7 @@
         };
 
         educationLevel1.addEventListener('change', updateEducationSystemOptions1);
-        updateEducationSystemOptions1(); // Initial population of options
+        updateEducationSystemOptions1();
 
         const universityForm2 = document.getElementById('universityForm2');
         const educationLevel2 = document.getElementById('educationLevel2');
@@ -623,7 +623,7 @@
 
         const updateEducationSystemOptions2 = () => {
             const selectedLevel = educationLevel2.value;
-            educationSystem2.innerHTML = ''; // Clearing previous options
+            educationSystem2.innerHTML = '';
             if (selectedLevel === 'Undergraduate') {
                 const options = ['Board of Intermediate Education, Andhra Pradesh', 'Government of Kerala Board of Higher Secondary Examinations'];
                 options.forEach(option => {
@@ -644,7 +644,7 @@
         };
 
         educationLevel2.addEventListener('change', updateEducationSystemOptions2);
-        updateEducationSystemOptions2(); // Initial population of options
+        updateEducationSystemOptions2();
 
         const universityForm3 = document.getElementById('universityForm3');
         const educationLevel3 = document.getElementById('educationLevel3');
@@ -660,7 +660,7 @@
 
         const updateEducationSystemOptions3 = () => {
             const selectedLevel = educationLevel3.value;
-            educationSystem3.innerHTML = ''; // Clearing previous options
+            educationSystem3.innerHTML = '';
             if (selectedLevel === 'Undergraduate') {
                 const options = ['IELTS', 'Pearson Test of English', 'TOEFL'];
                 options.forEach(option => {
@@ -681,7 +681,7 @@
         };
 
         educationLevel3.addEventListener('change', updateEducationSystemOptions3);
-        updateEducationSystemOptions3(); // Initial population of options
+        updateEducationSystemOptions3();
         
         const universityForm4 = document.getElementById('universityForm4');
         const educationLevel4 = document.getElementById('educationLevel4');
@@ -703,7 +703,7 @@
         const universityDiv16 = document.getElementById('university16');
 
         const handleFormSubmit1 = function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault();
 
             const inputValue1 = parseInt(slider1.value);
             let universityName1 = '';
@@ -761,12 +761,12 @@
                     const educationLevel = educationLevel1.value;
                     if ((educationLevel === 'Undergraduate' && ['Anglia Ruskin University', 'Coventry University'].includes(universityName)) ||
                         (educationLevel === 'Postgraduate' && ['Anglia Ruskin University', 'Coventry University', 'De Montfort University'].includes(universityName))) {
-                        button.style.display = 'inline-block'; // Show the info button only if the university box is not empty and the suggested university is valid
+                        button.style.display = 'inline-block';
                     } else {
                         button.style.display = 'none';
                     }
                 } else {
-                    button.style.display = 'none'; // Hide the info button if the university box is blank
+                    button.style.display = 'none';
                 }
             });
         };
@@ -779,21 +779,20 @@
 
             if (universityName.includes('Anglia Ruskin University')) {
                 if (educationLevel === 'Undergraduate') {
-                    message = 'UCOL'; // University College of London
+                    message = 'The Requirement for Finance Related Courses Is 80%';
                 } else if (educationLevel === 'Postgraduate') {
-                    message = 'GASPL'; // Graduate School of Politics and Law
+                    message = 'The Requirement for Finance Related Courses Is 80%';
                 }
             } else if (universityName.includes('Coventry University')) {
-                message = 'It’s Successful for Coventry University';
+                message = 'The Requirement for Finance Related Courses Is 80%';
             } else if (universityName.includes('De Montfort University')) {
-                message = 'It’s Successful for De Montfort University';
+                message = 'The Requirement for Finance Related Courses Is 80%';
             } else {
                 message = 'No university suggested';
             }
-            alert(message); // Display the message
+            alert(message);
         };
 
-        // Add event listeners to the info buttons for university form 1
         document.querySelectorAll('#form1 .info-button').forEach(button => {
             button.addEventListener('click', handleInfoButtonClickForm1);
         });
@@ -801,7 +800,7 @@
         universityForm1.addEventListener('submit', handleFormSubmit1);
 
         const handleFormSubmit2 = function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault();
 
             const inputValue2 = parseInt(slider2.value);
             let universityName4 = '';
@@ -866,12 +865,12 @@
                     const educationLevel = educationLevel2.value;
                     if ((educationLevel === 'Undergraduate' && ['Anglia Ruskin University', 'Coventry University'].includes(universityName)) ||
                         (educationLevel === 'Postgraduate' && ['Anglia Ruskin University', 'Coventry University', 'De Montfort University'].includes(universityName))) {
-                        button.style.display = 'inline-block'; // Show the info button only if the university box is not empty and the suggested university is valid
+                        button.style.display = 'inline-block';
                     } else {
                         button.style.display = 'none';
                     }
                 } else {
-                    button.style.display = 'none'; // Hide the info button if the university box is blank
+                    button.style.display = 'none';
                 }
             });
         };
@@ -884,21 +883,20 @@
 
             if (universityName.includes('Anglia Ruskin University')) {
                 if (educationLevel === 'Undergraduate') {
-                    message = 'UCOL\nUniversity College of London'; // University College of London
+                    message = 'The Requirement for Finance Related Courses Is 80%';
                 } else if (educationLevel === 'Postgraduate') {
-                    message = 'GASPL\nGraduate School of Politics and Law'; // Graduate School of Politics and Law
+                    message = 'The Requirement for Finance Related Courses Is 80%';
                 }
             } else if (universityName.includes('Coventry University')) {
-                message = 'It’s Successful for Coventry University';
+                message = 'The Requirement for Finance Related Courses Is 80%';
             } else if (universityName.includes('De Montfort University')) {
-                message = 'It’s Successful for De Montfort University';
+                message = 'The Requirement for Finance Related Courses Is 80%';
             } else {
                 message = 'No university suggested';
             }
-            alert(message); // Display the message
+            alert(message);
         };
 
-        // Add event listeners to the info buttons for university form 2
         document.querySelectorAll('#form2 .info-button').forEach(button => {
             button.addEventListener('click', handleInfoButtonClickForm2);
         });
@@ -906,7 +904,7 @@
         universityForm2.addEventListener('submit', handleFormSubmit2);
 
         const handleFormSubmit3 = function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault();
 
             const inputValue3 = parseInt(slider3.value);
             const inputValue4 = parseInt(slider4.value);
@@ -983,12 +981,12 @@
                     const educationLevel = educationLevel3.value;
                     if ((educationLevel === 'Undergraduate' && ['Anglia Ruskin University', 'Coventry University'].includes(universityName)) ||
                         (educationLevel === 'Postgraduate' && ['Anglia Ruskin University', 'Coventry University', 'De Montfort University'].includes(universityName))) {
-                        button.style.display = 'inline-block'; // Show the info button only if the university box is not empty and the suggested university is valid
+                        button.style.display = 'inline-block';
                     } else {
                         button.style.display = 'none';
                     }
                 } else {
-                    button.style.display = 'none'; // Hide the info button if the university box is blank
+                    button.style.display = 'none';
                 }
             });
         };
@@ -1001,21 +999,20 @@
 
             if (universityName.includes('Anglia Ruskin University')) {
                 if (educationLevel === 'Undergraduate') {
-                    message = 'UCOL'; // University College of London
+                    message = 'The Requirement for Finance Related Courses Is Higher';
                 } else if (educationLevel === 'Postgraduate') {
-                    message = 'GASPL'; // Graduate School of Politics and Law
+                    message = 'The Requirement for Finance Related Courses Is Higher';
                 }
             } else if (universityName.includes('Coventry University')) {
-                message = 'It’s Successful for Coventry University';
+                message = 'The Requirement for Finance Related Courses Is Higher';
             } else if (universityName.includes('De Montfort University')) {
-                message = 'It’s Successful for De Montfort University';
+                message = 'The Requirement for Finance Related Courses Is Higher';
             } else {
                 message = 'No university suggested';
             }
-            alert(message); // Display the message
+            alert(message);
         };
 
-        // Add event listeners to the info buttons for university form 3
         document.querySelectorAll('#form3 .info-button').forEach(button => {
             button.addEventListener('click', handleInfoButtonClickForm3);
         });
@@ -1023,7 +1020,7 @@
         universityForm3.addEventListener('submit', handleFormSubmit3);
 
         const handleFormSubmit4 = function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault();
 
             const inputValue8 = parseInt(slider8.value);
             let universityName10 = '';
@@ -1086,7 +1083,7 @@
         universityForm4.addEventListener('submit', handleFormSubmit4);
         
         const handleFormSubmit5 = function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault();
 
             let universityName13 = '';
             let universityName14 = '';
@@ -1118,7 +1115,7 @@
         universityForm5.addEventListener('submit', handleFormSubmit5);
         
         const handleFormSubmit6 = function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault();
 
             let universityName15 = '';
             let universityName16 = '';
